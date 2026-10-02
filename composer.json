@@ -1,0 +1,74 @@
+{
+    "name": "serafim/doom",
+    "description": "PHP Doom",
+    "type": "library",
+    "license": "MIT",
+    "repositories": [
+        {"type": "path", "url": "libs/*"}
+    ],
+    "require": {
+        "php": "^8.4",
+        "ext-ffi": "*",
+        "local/glfw": "^1.0",
+        "serafim/vulkan": "dev-master@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Serafim\\Doom\\": "app"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "phpat/phpat": "^0.12.5",
+        "phpstan/phpstan": "^2.3",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^12.0|^13.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Serafim\\Doom\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev",
+            "dev-main": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "platform-check": true,
+        "bin-compat": "full",
+        "optimize-autoloader": false,
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "scripts-aliases": {
+        "test:unit": [
+            "test",
+            "phpunit",
+            "unit"
+        ],
+        "linter:check": [
+            "linter",
+            "stan"
+        ],
+        "phpcs:check": [
+            "phpcs",
+            "cs",
+            "psr",
+            "per"
+        ]
+    },
+    "scripts": {
+        "test:unit": "phpunit --testdox",
+        "linter:check": "phpstan analyse --configuration phpstan.neon --memory-limit 1G",
+        "linter:baseline": "@linter:check --generate-baseline",
+        "phpcs:check": "@phpcs:fix --dry-run",
+        "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --verbose --diff"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

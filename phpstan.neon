@@ -1,0 +1,29 @@
+includes:
+  - libs/glfw/phpstan.neon
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+  - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+  - vendor/phpstan/phpstan-strict-rules/rules.neon
+  - vendor/phpat/phpat/extension.neon
+  - vendor/serafim/vulkan/extension.phpstan.neon
+parameters:
+  level: max
+  phpVersion:
+    min: 80400
+    max: 80500
+  strictRules:
+    allRules: true
+  paths:
+    - app
+  fileExtensions:
+    - php
+  tmpDir: vendor/.cache.phpstan
+  reportUnmatchedIgnoredErrors: true
+  treatPhpDocTypesAsCertain: false
+  phpat:
+    ignore_built_in_classes: true
+    show_rule_names: true
+services:
+  -
+    class: Serafim\Doom\Tests\Architecture\ExampleArchitecture
+    tags:
+      - phpat.test

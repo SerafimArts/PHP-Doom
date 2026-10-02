@@ -1,0 +1,28 @@
+* text=auto eol=lf
+
+# GIT
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+
+# Tools
+.php-cs-fixer.php export-ignore
+phpstan.neon export-ignore
+
+# Tests + CI
+phpunit.xml export-ignore
+
+/.github export-ignore
+/tests export-ignore
+/examples export-ignore
+
+# JavaScript
+tsconfig.json export-ignore
+
+vite.config.js export-ignore
+
+# Compiler Toolset
+# Development only
+/.claude export-ignore
+/CLAUDE.md export-ignore
+/test.php export-ignore

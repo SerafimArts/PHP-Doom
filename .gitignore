@@ -1,0 +1,20 @@
+# IDE
+/.idea
+/.cursor
+
+# Composer
+/composer.lock
+/vendor
+/vendor-bin
+/node_modules
+/build
+
+# Testing
+test2.php
+
+# Toolset
+*.phar
+
+# Scratch space and downloaded data (doom1.wad, dumps)
+/var/*
+!/var/.gitignore

@@ -1,0 +1,15 @@
+{
+    "name": "local/glfw",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.4",
+        "ext-ffi": "*",
+        "ffi/env": "^1.0",
+        "ffi/location": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Local\\GLFW\\": "src"
+        }
+    }
+}
