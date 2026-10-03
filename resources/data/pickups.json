@@ -1,0 +1,72 @@
+{
+    "CLIP": {
+        "kind": "ammo",
+        "ammo": "BULLETS",
+        "amount": 10,
+        "halvedWhenDropped": true,
+        "message": "Picked up a clip."
+    },
+    "BOX_OF_BULLETS": {
+        "kind": "ammo",
+        "ammo": "BULLETS",
+        "amount": 50,
+        "message": "Picked up a box of bullets."
+    },
+    "SHELLS": {
+        "kind": "ammo",
+        "ammo": "SHELLS",
+        "amount": 4,
+        "message": "Picked up 4 shotgun shells."
+    },
+    "BOX_OF_SHELLS": {
+        "kind": "ammo",
+        "ammo": "SHELLS",
+        "amount": 20,
+        "message": "Picked up a box of shotgun shells."
+    },
+    "STIMPACK": {
+        "kind": "health",
+        "amount": 10,
+        "limit": 100,
+        "message": "Picked up a stimpack."
+    },
+    "MEDIKIT": {
+        "kind": "health",
+        "amount": 25,
+        "limit": 100,
+        "needBelow": 25,
+        "message": "Picked up a medikit.",
+        "needMessage": "Picked up a medikit that you REALLY need!"
+    },
+    "HEALTH_BONUS": {
+        "kind": "healthBonus",
+        "amount": 1,
+        "limit": 200,
+        "message": "Picked up a health bonus."
+    },
+    "ARMOR_BONUS": {
+        "kind": "armorBonus",
+        "amount": 1,
+        "limit": 200,
+        "message": "Picked up an armor bonus."
+    },
+    "GREEN_ARMOR": {
+        "kind": "armor",
+        "armor": "GREEN",
+        "message": "Picked up the armor."
+    },
+    "BLUE_ARMOR": {
+        "kind": "armor",
+        "armor": "BLUE",
+        "message": "Picked up the MegaArmor!"
+    },
+    "SHOTGUN": {
+        "kind": "weapon",
+        "weapon": "SHOTGUN",
+        "ammo": "SHELLS",
+        "amount": 8,
+        "halvedWhenDropped": true,
+        "message": "Picked up 8 shotgun shells.",
+        "newMessage": "You got the shotgun!"
+    }
+}

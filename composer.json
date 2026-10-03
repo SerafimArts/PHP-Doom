@@ -4,13 +4,23 @@
     "type": "library",
     "license": "MIT",
     "repositories": [
-        {"type": "path", "url": "libs/*"}
+        {
+            "type": "path",
+            "url": "libs/*"
+        }
     ],
     "require": {
         "php": "^8.4",
         "ext-ffi": "*",
         "local/glfw": "^1.0",
-        "serafim/vulkan": "dev-master@dev"
+        "local/gpu": "^1.0",
+        "local/wad": "^1.0",
+        "serafim/vulkan": "dev-master@dev",
+        "symfony/console": "^7.4|^8.0",
+        "symfony/filesystem": "^7.4|^8.0",
+        "symfony/finder": "^7.4|^8.0",
+        "symfony/http-client": "^7.4|^8.0",
+        "symfony/process": "^7.4|^8.0"
     },
     "autoload": {
         "psr-4": {
@@ -27,7 +37,10 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Serafim\\Doom\\Tests\\": "tests"
+            "Serafim\\Doom\\Tests\\": "tests",
+            "Local\\WAD\\Tests\\": "libs/wad/tests",
+            "Local\\GPU\\Tests\\": "libs/gpu/tests",
+            "Local\\GLFW\\Tests\\": "libs/glfw/tests"
         }
     },
     "extra": {

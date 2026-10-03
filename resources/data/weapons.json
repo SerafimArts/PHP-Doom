@@ -1,0 +1,29 @@
+{
+    "FIST": {
+        "sprite": "PUNG",
+        "ammo": null,
+        "ready": "S_PUNCH",
+        "up": "S_PUNCHUP",
+        "down": "S_PUNCHDOWN",
+        "attack": "S_PUNCH1",
+        "flash": null
+    },
+    "PISTOL": {
+        "sprite": "PISG",
+        "ammo": "BULLETS",
+        "ready": "S_PISTOL",
+        "up": "S_PISTOLUP",
+        "down": "S_PISTOLDOWN",
+        "attack": "S_PISTOL1",
+        "flash": "S_PISTOLFLASH"
+    },
+    "SHOTGUN": {
+        "sprite": "SHTG",
+        "ammo": "SHELLS",
+        "ready": "S_SGUN",
+        "up": "S_SGUNUP",
+        "down": "S_SGUNDOWN",
+        "attack": "S_SGUN1",
+        "flash": "S_SGUNFLASH1"
+    }
+}

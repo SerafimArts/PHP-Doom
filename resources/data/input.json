@@ -1,0 +1,29 @@
+{
+    "keys": {
+        "USE": ["SPACE", "E"],
+        "WEAPON_1": ["NUM_1"],
+        "WEAPON_2": ["NUM_2"],
+        "WEAPON_3": ["NUM_3"],
+        "TOGGLE_RAYS": ["F2", "L"],
+        "TOGGLE_MOUSE": ["TAB"],
+        "LEAVE": ["ESCAPE"]
+    },
+    "movement": {
+        "forward": "W",
+        "back": "S",
+        "right": "D",
+        "left": "A",
+        "run": "LEFT_SHIFT",
+        "fire": "LEFT_CONTROL",
+        "fireButton": "LEFT",
+        "turnLeft": "LEFT",
+        "turnRight": "RIGHT"
+    },
+    "mouseSensitivity": 0.0025,
+    "keyTurn": 640,
+    "runTurnFactor": 2,
+    "help": {
+        "play": "W S A D move, mouse turns, SPACE or E uses, CTRL or left button fires, 1 2 3 weapons, SHIFT runs, F2 rays, TAB mouse, ESC leave",
+        "fly": "WASD move, mouse turns, SPACE/CTRL up/down, SHIFT faster, F2 rays, TAB mouse, ESC leave"
+    }
+}

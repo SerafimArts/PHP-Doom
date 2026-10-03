@@ -1,0 +1,218 @@
+{
+    "POSSESSED": {
+        "doomednum": 3004,
+        "radius": 20,
+        "height": 56,
+        "solid": true,
+        "spawn": "S_POSS_STND",
+        "see": "S_POSS_RUN1",
+        "missile": "S_POSS_ATK1",
+        "pain": "S_POSS_PAIN",
+        "death": "S_POSS_DIE1",
+        "xdeath": "S_POSS_XDIE1",
+        "health": 20,
+        "painChance": 200,
+        "shootable": true,
+        "countsAsKill": true,
+        "drop": "CLIP",
+        "speed": 8,
+        "reactionTime": 8,
+        "randomStart": true
+    },
+    "SHOTGUY": {
+        "doomednum": 9,
+        "radius": 20,
+        "height": 56,
+        "solid": true,
+        "spawn": "S_SPOS_STND",
+        "see": "S_SPOS_RUN1",
+        "missile": "S_SPOS_ATK1",
+        "pain": "S_SPOS_PAIN",
+        "death": "S_SPOS_DIE1",
+        "xdeath": "S_SPOS_XDIE1",
+        "health": 30,
+        "painChance": 170,
+        "shootable": true,
+        "countsAsKill": true,
+        "drop": "SHOTGUN",
+        "speed": 8,
+        "reactionTime": 8,
+        "randomStart": true
+    },
+    "TROOP": {
+        "doomednum": 3001,
+        "radius": 20,
+        "height": 56,
+        "solid": true,
+        "spawn": "S_TROO_STND",
+        "see": "S_TROO_RUN1",
+        "melee": "S_TROO_ATK1",
+        "missile": "S_TROO_ATK1",
+        "pain": "S_TROO_PAIN",
+        "death": "S_TROO_DIE1",
+        "xdeath": "S_TROO_XDIE1",
+        "health": 60,
+        "painChance": 200,
+        "shootable": true,
+        "countsAsKill": true,
+        "speed": 8,
+        "reactionTime": 8,
+        "randomStart": true
+    },
+    "BLOODY_MESS": {
+        "doomednum": 10,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_BLOODY_MESS_1"
+    },
+    "BLOODY_MESS2": {
+        "doomednum": 12,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_BLOODY_MESS2_1"
+    },
+    "DEAD_PLAYER": {
+        "doomednum": 15,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_DEAD_PLAYER_1"
+    },
+    "POOL_OF_BLOOD": {
+        "doomednum": 24,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_POL5_1"
+    },
+    "CANDELABRA": {
+        "doomednum": 35,
+        "radius": 16,
+        "height": 16,
+        "solid": true,
+        "spawn": "S_CBRA_1"
+    },
+    "TECH_COLUMN": {
+        "doomednum": 48,
+        "radius": 16,
+        "height": 128,
+        "solid": true,
+        "spawn": "S_ELEC_1"
+    },
+    "FLOOR_LAMP": {
+        "doomednum": 2028,
+        "radius": 16,
+        "height": 16,
+        "solid": true,
+        "spawn": "S_COLU_1"
+    },
+    "BARREL": {
+        "doomednum": 2035,
+        "radius": 10,
+        "height": 42,
+        "solid": true,
+        "spawn": "S_BAR1",
+        "death": "S_BEXP",
+        "health": 20,
+        "shootable": true,
+        "blood": false,
+        "randomStart": true
+    },
+    "PUFF": {
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_PUFF1"
+    },
+    "BLOOD": {
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_BLOOD1",
+        "gravity": 1
+    },
+    "TROOP_SHOT": {
+        "radius": 6,
+        "height": 8,
+        "spawn": "S_TBALL1",
+        "death": "S_TBALLX1",
+        "speed": 10,
+        "damage": 3,
+        "isMissile": true
+    },
+    "SHOTGUN": {
+        "doomednum": 2001,
+        "radius": 20,
+        "height": 16,
+        "pickup": "SHOTGUN",
+        "spawn": "S_SHOT_1"
+    },
+    "CLIP": {
+        "doomednum": 2007,
+        "radius": 20,
+        "height": 16,
+        "pickup": "CLIP",
+        "spawn": "S_CLIP_1"
+    },
+    "SHELLS": {
+        "doomednum": 2008,
+        "radius": 20,
+        "height": 16,
+        "pickup": "SHELLS",
+        "spawn": "S_SHEL_1"
+    },
+    "BOX_OF_BULLETS": {
+        "doomednum": 2048,
+        "radius": 20,
+        "height": 16,
+        "pickup": "BOX_OF_BULLETS",
+        "spawn": "S_AMMO_1"
+    },
+    "BOX_OF_SHELLS": {
+        "doomednum": 2049,
+        "radius": 20,
+        "height": 16,
+        "pickup": "BOX_OF_SHELLS",
+        "spawn": "S_SBOX_1"
+    },
+    "STIMPACK": {
+        "doomednum": 2011,
+        "radius": 20,
+        "height": 16,
+        "pickup": "STIMPACK",
+        "spawn": "S_STIM_1"
+    },
+    "MEDIKIT": {
+        "doomednum": 2012,
+        "radius": 20,
+        "height": 16,
+        "pickup": "MEDIKIT",
+        "spawn": "S_MEDI_1"
+    },
+    "HEALTH_BONUS": {
+        "doomednum": 2014,
+        "radius": 20,
+        "height": 16,
+        "pickup": "HEALTH_BONUS",
+        "spawn": "S_BON1_1",
+        "countsAsItem": true
+    },
+    "ARMOR_BONUS": {
+        "doomednum": 2015,
+        "radius": 20,
+        "height": 16,
+        "pickup": "ARMOR_BONUS",
+        "spawn": "S_BON2_1",
+        "countsAsItem": true
+    },
+    "GREEN_ARMOR": {
+        "doomednum": 2018,
+        "radius": 20,
+        "height": 16,
+        "pickup": "GREEN_ARMOR",
+        "spawn": "S_ARM1_1"
+    },
+    "BLUE_ARMOR": {
+        "doomednum": 2019,
+        "radius": 20,
+        "height": 16,
+        "pickup": "BLUE_ARMOR",
+        "spawn": "S_ARM2_1"
+    }
+}

@@ -1,3 +1,5 @@
 parameters:
   paths:
     - src
+  stubFiles:
+    - resources/stubs/FFI.stub

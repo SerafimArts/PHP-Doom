@@ -1,0 +1,1050 @@
+{
+    "S_POSS_STND": {
+        "sprite": "POSS",
+        "frame": "A",
+        "tics": 10,
+        "next": "S_POSS_STND2",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_POSS_STND2": {
+        "sprite": "POSS",
+        "frame": "B",
+        "tics": 10,
+        "next": "S_POSS_STND",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_POSS_RUN1": {
+        "sprite": "POSS",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_POSS_RUN2",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN2": {
+        "sprite": "POSS",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_POSS_RUN3",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN3": {
+        "sprite": "POSS",
+        "frame": "B",
+        "tics": 4,
+        "next": "S_POSS_RUN4",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN4": {
+        "sprite": "POSS",
+        "frame": "B",
+        "tics": 4,
+        "next": "S_POSS_RUN5",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN5": {
+        "sprite": "POSS",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_POSS_RUN6",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN6": {
+        "sprite": "POSS",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_POSS_RUN7",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN7": {
+        "sprite": "POSS",
+        "frame": "D",
+        "tics": 4,
+        "next": "S_POSS_RUN8",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_RUN8": {
+        "sprite": "POSS",
+        "frame": "D",
+        "tics": 4,
+        "next": "S_POSS_RUN1",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_POSS_ATK1": {
+        "sprite": "POSS",
+        "frame": "E",
+        "tics": 10,
+        "next": "S_POSS_ATK2",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_POSS_ATK2": {
+        "sprite": "POSS",
+        "frame": "F",
+        "tics": 8,
+        "next": "S_POSS_ATK3",
+        "action": "POS_ATTACK",
+        "fullBright": false
+    },
+    "S_POSS_ATK3": {
+        "sprite": "POSS",
+        "frame": "E",
+        "tics": 8,
+        "next": "S_POSS_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_PAIN": {
+        "sprite": "POSS",
+        "frame": "G",
+        "tics": 3,
+        "next": "S_POSS_PAIN2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_PAIN2": {
+        "sprite": "POSS",
+        "frame": "G",
+        "tics": 3,
+        "next": "S_POSS_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_DIE1": {
+        "sprite": "POSS",
+        "frame": "H",
+        "tics": 5,
+        "next": "S_POSS_DIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_DIE2": {
+        "sprite": "POSS",
+        "frame": "I",
+        "tics": 5,
+        "next": "S_POSS_DIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_DIE3": {
+        "sprite": "POSS",
+        "frame": "J",
+        "tics": 5,
+        "next": "S_POSS_DIE4",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_POSS_DIE4": {
+        "sprite": "POSS",
+        "frame": "K",
+        "tics": 5,
+        "next": "S_POSS_DIE5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_DIE5": {
+        "sprite": "POSS",
+        "frame": "L",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE1": {
+        "sprite": "POSS",
+        "frame": "M",
+        "tics": 5,
+        "next": "S_POSS_XDIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE2": {
+        "sprite": "POSS",
+        "frame": "N",
+        "tics": 5,
+        "next": "S_POSS_XDIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE3": {
+        "sprite": "POSS",
+        "frame": "O",
+        "tics": 5,
+        "next": "S_POSS_XDIE4",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_POSS_XDIE4": {
+        "sprite": "POSS",
+        "frame": "P",
+        "tics": 5,
+        "next": "S_POSS_XDIE5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE5": {
+        "sprite": "POSS",
+        "frame": "Q",
+        "tics": 5,
+        "next": "S_POSS_XDIE6",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE6": {
+        "sprite": "POSS",
+        "frame": "R",
+        "tics": 5,
+        "next": "S_POSS_XDIE7",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE7": {
+        "sprite": "POSS",
+        "frame": "S",
+        "tics": 5,
+        "next": "S_POSS_XDIE8",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE8": {
+        "sprite": "POSS",
+        "frame": "T",
+        "tics": 5,
+        "next": "S_POSS_XDIE9",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POSS_XDIE9": {
+        "sprite": "POSS",
+        "frame": "U",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_STND": {
+        "sprite": "SPOS",
+        "frame": "A",
+        "tics": 10,
+        "next": "S_SPOS_STND2",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_SPOS_STND2": {
+        "sprite": "SPOS",
+        "frame": "B",
+        "tics": 10,
+        "next": "S_SPOS_STND",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_SPOS_RUN1": {
+        "sprite": "SPOS",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_SPOS_RUN2",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN2": {
+        "sprite": "SPOS",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_SPOS_RUN3",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN3": {
+        "sprite": "SPOS",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_SPOS_RUN4",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN4": {
+        "sprite": "SPOS",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_SPOS_RUN5",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN5": {
+        "sprite": "SPOS",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_SPOS_RUN6",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN6": {
+        "sprite": "SPOS",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_SPOS_RUN7",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN7": {
+        "sprite": "SPOS",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_SPOS_RUN8",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_RUN8": {
+        "sprite": "SPOS",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_SPOS_RUN1",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_SPOS_ATK1": {
+        "sprite": "SPOS",
+        "frame": "E",
+        "tics": 10,
+        "next": "S_SPOS_ATK2",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_SPOS_ATK2": {
+        "sprite": "SPOS",
+        "frame": "F",
+        "tics": 10,
+        "next": "S_SPOS_ATK3",
+        "action": "SPOS_ATTACK",
+        "fullBright": true
+    },
+    "S_SPOS_ATK3": {
+        "sprite": "SPOS",
+        "frame": "E",
+        "tics": 10,
+        "next": "S_SPOS_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_PAIN": {
+        "sprite": "SPOS",
+        "frame": "G",
+        "tics": 3,
+        "next": "S_SPOS_PAIN2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_PAIN2": {
+        "sprite": "SPOS",
+        "frame": "G",
+        "tics": 3,
+        "next": "S_SPOS_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_DIE1": {
+        "sprite": "SPOS",
+        "frame": "H",
+        "tics": 5,
+        "next": "S_SPOS_DIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_DIE2": {
+        "sprite": "SPOS",
+        "frame": "I",
+        "tics": 5,
+        "next": "S_SPOS_DIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_DIE3": {
+        "sprite": "SPOS",
+        "frame": "J",
+        "tics": 5,
+        "next": "S_SPOS_DIE4",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_SPOS_DIE4": {
+        "sprite": "SPOS",
+        "frame": "K",
+        "tics": 5,
+        "next": "S_SPOS_DIE5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_DIE5": {
+        "sprite": "SPOS",
+        "frame": "L",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE1": {
+        "sprite": "SPOS",
+        "frame": "M",
+        "tics": 5,
+        "next": "S_SPOS_XDIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE2": {
+        "sprite": "SPOS",
+        "frame": "N",
+        "tics": 5,
+        "next": "S_SPOS_XDIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE3": {
+        "sprite": "SPOS",
+        "frame": "O",
+        "tics": 5,
+        "next": "S_SPOS_XDIE4",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE4": {
+        "sprite": "SPOS",
+        "frame": "P",
+        "tics": 5,
+        "next": "S_SPOS_XDIE5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE5": {
+        "sprite": "SPOS",
+        "frame": "Q",
+        "tics": 5,
+        "next": "S_SPOS_XDIE6",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE6": {
+        "sprite": "SPOS",
+        "frame": "R",
+        "tics": 5,
+        "next": "S_SPOS_XDIE7",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE7": {
+        "sprite": "SPOS",
+        "frame": "S",
+        "tics": 5,
+        "next": "S_SPOS_XDIE8",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE8": {
+        "sprite": "SPOS",
+        "frame": "T",
+        "tics": 5,
+        "next": "S_SPOS_XDIE9",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SPOS_XDIE9": {
+        "sprite": "SPOS",
+        "frame": "U",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_STND": {
+        "sprite": "TROO",
+        "frame": "A",
+        "tics": 10,
+        "next": "S_TROO_STND2",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_TROO_STND2": {
+        "sprite": "TROO",
+        "frame": "B",
+        "tics": 10,
+        "next": "S_TROO_STND",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_TROO_RUN1": {
+        "sprite": "TROO",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_TROO_RUN2",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN2": {
+        "sprite": "TROO",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_TROO_RUN3",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN3": {
+        "sprite": "TROO",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_TROO_RUN4",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN4": {
+        "sprite": "TROO",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_TROO_RUN5",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN5": {
+        "sprite": "TROO",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_TROO_RUN6",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN6": {
+        "sprite": "TROO",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_TROO_RUN7",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN7": {
+        "sprite": "TROO",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_TROO_RUN8",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_RUN8": {
+        "sprite": "TROO",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_TROO_RUN1",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_TROO_ATK1": {
+        "sprite": "TROO",
+        "frame": "E",
+        "tics": 8,
+        "next": "S_TROO_ATK2",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_TROO_ATK2": {
+        "sprite": "TROO",
+        "frame": "F",
+        "tics": 8,
+        "next": "S_TROO_ATK3",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_TROO_ATK3": {
+        "sprite": "TROO",
+        "frame": "G",
+        "tics": 6,
+        "next": "S_TROO_RUN1",
+        "action": "TROOP_ATTACK",
+        "fullBright": false
+    },
+    "S_TROO_PAIN": {
+        "sprite": "TROO",
+        "frame": "H",
+        "tics": 2,
+        "next": "S_TROO_PAIN2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_PAIN2": {
+        "sprite": "TROO",
+        "frame": "H",
+        "tics": 2,
+        "next": "S_TROO_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_DIE1": {
+        "sprite": "TROO",
+        "frame": "I",
+        "tics": 8,
+        "next": "S_TROO_DIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_DIE2": {
+        "sprite": "TROO",
+        "frame": "J",
+        "tics": 8,
+        "next": "S_TROO_DIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_DIE3": {
+        "sprite": "TROO",
+        "frame": "K",
+        "tics": 6,
+        "next": "S_TROO_DIE4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_DIE4": {
+        "sprite": "TROO",
+        "frame": "L",
+        "tics": 6,
+        "next": "S_TROO_DIE5",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_TROO_DIE5": {
+        "sprite": "TROO",
+        "frame": "M",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE1": {
+        "sprite": "TROO",
+        "frame": "N",
+        "tics": 5,
+        "next": "S_TROO_XDIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE2": {
+        "sprite": "TROO",
+        "frame": "O",
+        "tics": 5,
+        "next": "S_TROO_XDIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE3": {
+        "sprite": "TROO",
+        "frame": "P",
+        "tics": 5,
+        "next": "S_TROO_XDIE4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE4": {
+        "sprite": "TROO",
+        "frame": "Q",
+        "tics": 5,
+        "next": "S_TROO_XDIE5",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_TROO_XDIE5": {
+        "sprite": "TROO",
+        "frame": "R",
+        "tics": 5,
+        "next": "S_TROO_XDIE6",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE6": {
+        "sprite": "TROO",
+        "frame": "S",
+        "tics": 5,
+        "next": "S_TROO_XDIE7",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE7": {
+        "sprite": "TROO",
+        "frame": "T",
+        "tics": 5,
+        "next": "S_TROO_XDIE8",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TROO_XDIE8": {
+        "sprite": "TROO",
+        "frame": "U",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_TBALL1": {
+        "sprite": "BAL1",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_TBALL2",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_TBALL2": {
+        "sprite": "BAL1",
+        "frame": "B",
+        "tics": 4,
+        "next": "S_TBALL1",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_TBALLX1": {
+        "sprite": "BAL1",
+        "frame": "C",
+        "tics": 6,
+        "next": "S_TBALLX2",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_TBALLX2": {
+        "sprite": "BAL1",
+        "frame": "D",
+        "tics": 6,
+        "next": "S_TBALLX3",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_TBALLX3": {
+        "sprite": "BAL1",
+        "frame": "E",
+        "tics": 6,
+        "next": null,
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_BAR1": {
+        "sprite": "BAR1",
+        "frame": "A",
+        "tics": 6,
+        "next": "S_BAR2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BAR2": {
+        "sprite": "BAR1",
+        "frame": "B",
+        "tics": 6,
+        "next": "S_BAR1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BEXP": {
+        "sprite": "BEXP",
+        "frame": "A",
+        "tics": 5,
+        "next": "S_BEXP2",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_BEXP2": {
+        "sprite": "BEXP",
+        "frame": "B",
+        "tics": 5,
+        "next": "S_BEXP3",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_BEXP3": {
+        "sprite": "BEXP",
+        "frame": "C",
+        "tics": 5,
+        "next": "S_BEXP4",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_BEXP4": {
+        "sprite": "BEXP",
+        "frame": "D",
+        "tics": 10,
+        "next": "S_BEXP5",
+        "action": "EXPLODE",
+        "fullBright": true
+    },
+    "S_BEXP5": {
+        "sprite": "BEXP",
+        "frame": "E",
+        "tics": 10,
+        "next": null,
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_PUFF1": {
+        "sprite": "PUFF",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_PUFF2",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_PUFF2": {
+        "sprite": "PUFF",
+        "frame": "B",
+        "tics": 4,
+        "next": "S_PUFF3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PUFF3": {
+        "sprite": "PUFF",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_PUFF4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PUFF4": {
+        "sprite": "PUFF",
+        "frame": "D",
+        "tics": 4,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BLOOD1": {
+        "sprite": "BLUD",
+        "frame": "C",
+        "tics": 8,
+        "next": "S_BLOOD2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BLOOD2": {
+        "sprite": "BLUD",
+        "frame": "B",
+        "tics": 8,
+        "next": "S_BLOOD3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BLOOD3": {
+        "sprite": "BLUD",
+        "frame": "A",
+        "tics": 8,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_POL5_1": {
+        "sprite": "POL5",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_CBRA_1": {
+        "sprite": "CBRA",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_ELEC_1": {
+        "sprite": "ELEC",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_COLU_1": {
+        "sprite": "COLU",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_SHOT_1": {
+        "sprite": "SHOT",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_CLIP_1": {
+        "sprite": "CLIP",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SHEL_1": {
+        "sprite": "SHEL",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_AMMO_1": {
+        "sprite": "AMMO",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SBOX_1": {
+        "sprite": "SBOX",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_STIM_1": {
+        "sprite": "STIM",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_MEDI_1": {
+        "sprite": "MEDI",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON1_1": {
+        "sprite": "BON1",
+        "frame": "A",
+        "tics": 6,
+        "next": "S_BON1_2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON1_2": {
+        "sprite": "BON1",
+        "frame": "B",
+        "tics": 6,
+        "next": "S_BON1_3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON1_3": {
+        "sprite": "BON1",
+        "frame": "C",
+        "tics": 6,
+        "next": "S_BON1_4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON1_4": {
+        "sprite": "BON1",
+        "frame": "D",
+        "tics": 6,
+        "next": "S_BON1_1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON2_1": {
+        "sprite": "BON2",
+        "frame": "A",
+        "tics": 6,
+        "next": "S_BON2_2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON2_2": {
+        "sprite": "BON2",
+        "frame": "B",
+        "tics": 6,
+        "next": "S_BON2_3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON2_3": {
+        "sprite": "BON2",
+        "frame": "C",
+        "tics": 6,
+        "next": "S_BON2_4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BON2_4": {
+        "sprite": "BON2",
+        "frame": "D",
+        "tics": 6,
+        "next": "S_BON2_1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_ARM1_1": {
+        "sprite": "ARM1",
+        "frame": "A",
+        "tics": 6,
+        "next": "S_ARM1_2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_ARM1_2": {
+        "sprite": "ARM1",
+        "frame": "B",
+        "tics": 7,
+        "next": "S_ARM1_1",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_ARM2_1": {
+        "sprite": "ARM2",
+        "frame": "A",
+        "tics": 6,
+        "next": "S_ARM2_2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_ARM2_2": {
+        "sprite": "ARM2",
+        "frame": "B",
+        "tics": 7,
+        "next": "S_ARM2_1",
+        "action": "NONE",
+        "fullBright": true
+    },
+    "S_BLOODY_MESS_1": {
+        "sprite": "PLAY",
+        "frame": "W",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BLOODY_MESS2_1": {
+        "sprite": "PLAY",
+        "frame": "W",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_DEAD_PLAYER_1": {
+        "sprite": "PLAY",
+        "frame": "N",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    }
+}

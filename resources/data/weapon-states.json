@@ -1,0 +1,250 @@
+{
+    "S_LIGHTDONE": {
+        "sprite": "SHTG",
+        "frame": "E",
+        "tics": 0,
+        "next": null,
+        "action": "LIGHT0",
+        "fullBright": false
+    },
+    "S_PUNCH": {
+        "sprite": "PUNG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PUNCH",
+        "action": "READY",
+        "fullBright": false
+    },
+    "S_PUNCHDOWN": {
+        "sprite": "PUNG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PUNCHDOWN",
+        "action": "LOWER",
+        "fullBright": false
+    },
+    "S_PUNCHUP": {
+        "sprite": "PUNG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PUNCHUP",
+        "action": "RAISE",
+        "fullBright": false
+    },
+    "S_PUNCH1": {
+        "sprite": "PUNG",
+        "frame": "B",
+        "tics": 4,
+        "next": "S_PUNCH2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PUNCH2": {
+        "sprite": "PUNG",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_PUNCH3",
+        "action": "PUNCH",
+        "fullBright": false
+    },
+    "S_PUNCH3": {
+        "sprite": "PUNG",
+        "frame": "D",
+        "tics": 5,
+        "next": "S_PUNCH4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PUNCH4": {
+        "sprite": "PUNG",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_PUNCH5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PUNCH5": {
+        "sprite": "PUNG",
+        "frame": "B",
+        "tics": 5,
+        "next": "S_PUNCH",
+        "action": "REFIRE",
+        "fullBright": false
+    },
+    "S_PISTOL": {
+        "sprite": "PISG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PISTOL",
+        "action": "READY",
+        "fullBright": false
+    },
+    "S_PISTOLDOWN": {
+        "sprite": "PISG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PISTOLDOWN",
+        "action": "LOWER",
+        "fullBright": false
+    },
+    "S_PISTOLUP": {
+        "sprite": "PISG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_PISTOLUP",
+        "action": "RAISE",
+        "fullBright": false
+    },
+    "S_PISTOL1": {
+        "sprite": "PISG",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_PISTOL2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PISTOL2": {
+        "sprite": "PISG",
+        "frame": "B",
+        "tics": 6,
+        "next": "S_PISTOL3",
+        "action": "FIRE_PISTOL",
+        "fullBright": false
+    },
+    "S_PISTOL3": {
+        "sprite": "PISG",
+        "frame": "C",
+        "tics": 4,
+        "next": "S_PISTOL4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_PISTOL4": {
+        "sprite": "PISG",
+        "frame": "B",
+        "tics": 5,
+        "next": "S_PISTOL",
+        "action": "REFIRE",
+        "fullBright": false
+    },
+    "S_PISTOLFLASH": {
+        "sprite": "PISF",
+        "frame": "A",
+        "tics": 7,
+        "next": "S_LIGHTDONE",
+        "action": "LIGHT1",
+        "fullBright": true
+    },
+    "S_SGUN": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_SGUN",
+        "action": "READY",
+        "fullBright": false
+    },
+    "S_SGUNDOWN": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_SGUNDOWN",
+        "action": "LOWER",
+        "fullBright": false
+    },
+    "S_SGUNUP": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 1,
+        "next": "S_SGUNUP",
+        "action": "RAISE",
+        "fullBright": false
+    },
+    "S_SGUN1": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_SGUN2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN2": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 7,
+        "next": "S_SGUN3",
+        "action": "FIRE_SHOTGUN",
+        "fullBright": false
+    },
+    "S_SGUN3": {
+        "sprite": "SHTG",
+        "frame": "B",
+        "tics": 5,
+        "next": "S_SGUN4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN4": {
+        "sprite": "SHTG",
+        "frame": "C",
+        "tics": 5,
+        "next": "S_SGUN5",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN5": {
+        "sprite": "SHTG",
+        "frame": "D",
+        "tics": 4,
+        "next": "S_SGUN6",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN6": {
+        "sprite": "SHTG",
+        "frame": "C",
+        "tics": 5,
+        "next": "S_SGUN7",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN7": {
+        "sprite": "SHTG",
+        "frame": "B",
+        "tics": 5,
+        "next": "S_SGUN8",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN8": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_SGUN9",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_SGUN9": {
+        "sprite": "SHTG",
+        "frame": "A",
+        "tics": 7,
+        "next": "S_SGUN",
+        "action": "REFIRE",
+        "fullBright": false
+    },
+    "S_SGUNFLASH1": {
+        "sprite": "SHTF",
+        "frame": "A",
+        "tics": 4,
+        "next": "S_SGUNFLASH2",
+        "action": "LIGHT1",
+        "fullBright": true
+    },
+    "S_SGUNFLASH2": {
+        "sprite": "SHTF",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_LIGHTDONE",
+        "action": "LIGHT2",
+        "fullBright": true
+    }
+}

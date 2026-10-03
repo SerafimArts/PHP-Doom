@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Local\GLFW;
 
+use Local\GLFW\Exception\GlfwNotSupportedException;
+
 final readonly class GLFW3
 {
+    /**
+     * @throws GlfwNotSupportedException in case of the OS has no bundled library or the header is not readable
+     */
     public static function load(): \FFI
     {
         return \FFI::cdef(
@@ -14,12 +19,15 @@ final readonly class GLFW3
         );
     }
 
+    /**
+     * @throws GlfwNotSupportedException in case of the header is not readable
+     */
     private static function getHeaderContent(): string
     {
         $content = \file_get_contents($pathname = self::getHeaderPathname());
 
         if ($content === false) {
-            throw new \RuntimeException(\sprintf('Unable to read GLFW header "%s"', $pathname));
+            throw GlfwNotSupportedException::becauseHeaderIsNotReadable($pathname);
         }
 
         return $content;
@@ -35,12 +43,13 @@ final readonly class GLFW3
 
     /**
      * @return non-empty-string
+     * @throws GlfwNotSupportedException in case of the OS has no bundled library
      */
     private static function getBinPathname(): string
     {
         return match (\strtolower(\PHP_OS_FAMILY)) {
             'windows' => __DIR__ . '/../bin/glfw3.dll',
-            default => throw new \RuntimeException('Unsupported OS family'),
+            default => throw GlfwNotSupportedException::becauseOsFamilyIsNotSupported(\PHP_OS_FAMILY),
         };
     }
 }

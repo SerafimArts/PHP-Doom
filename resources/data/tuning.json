@@ -1,0 +1,44 @@
+{
+    "physics": {
+        "thrust": 0.03125,
+        "friction": 0.90625,
+        "stopSpeed": 0.0625,
+        "maxSpeed": 30.0,
+        "maxStep": 15.0,
+        "maxBob": 16.0,
+        "gravity": 1.0,
+        "slideAttempts": 3,
+        "searchIterations": 10
+    },
+    "weapon": {
+        "top": 32.0,
+        "bottom": 128.0,
+        "lowerSpeed": 6.0,
+        "raiseSpeed": 6.0,
+        "bulletAimRange": 1024.0,
+        "aimSearchDivisor": 32,
+        "pellets": 7,
+        "muzzleHeightOffset": 8.0
+    },
+    "combat": {
+        "meleeRange": 64.0,
+        "missileRange": 2048.0,
+        "playerSpreadDivisor": 16384,
+        "monsterSpreadDivisor": 4096,
+        "aimSlope": 0.625,
+        "wallBackoff": 4.0,
+        "thingBackoff": 10.0,
+        "baseThreshold": 100,
+        "barrelDamage": 128
+    },
+    "monster": {
+        "missileNear": 64.0,
+        "noClawBonus": 128.0,
+        "maxMissileDistance": 200,
+        "diagonal": 0.7171630859375,
+        "turnDistance": 10.0,
+        "launchHeight": 32.0,
+        "pellets": 3,
+        "eyePart": 0.75
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "barTop": 168,
+    "spaceWidth": 4,
+    "arms": {"picture": "STARMS", "x": 104},
+    "face": {"x": 143},
+    "ammo": {"prefix": "STTNUM", "right": 44, "y": 171, "digitWidth": 14},
+    "health": {"prefix": "STTNUM", "right": 90, "y": 171, "digitWidth": 14, "percent": {"picture": "STTPRCNT", "x": 90, "y": 171}},
+    "armor": {"prefix": "STTNUM", "right": 221, "y": 171, "digitWidth": 14, "percent": {"picture": "STTPRCNT", "x": 221, "y": 171}},
+    "weapons": {
+        "first": 2,
+        "last": 7,
+        "x": 111,
+        "y": 172,
+        "columns": 3,
+        "cellWidth": 12,
+        "cellHeight": 10,
+        "ownedPrefix": "STYSNUM",
+        "missingPrefix": "STGNUM"
+    },
+    "ammoRows": {
+        "prefix": "STYSNUM",
+        "currentRight": 288,
+        "capacityRight": 314,
+        "y": 173,
+        "rowHeight": 6,
+        "digitWidth": 4,
+        "rows": [
+            {"ammo": "BULLETS"},
+            {"ammo": "SHELLS"},
+            {"capacity": 50},
+            {"capacity": 300}
+        ]
+    },
+    "weaponLight": {"levels": 15, "rowsPerLevel": 4, "rowOffset": 23}
+}

@@ -1,0 +1,40 @@
+{
+    "lamp": {
+        "thing": 2028,
+        "height": 56,
+        "radius": 330.0,
+        "color": [0.62, 0.52, 0.36],
+        "flicker": {"base": 0.93, "amplitude": 0.07, "speedA": 7.3, "speedB": 3.1, "phase": 2.1}
+    },
+    "flash": {
+        "radius": 520.0,
+        "color": [1.5, 1.15, 0.6],
+        "forward": 18.0,
+        "side": 16.0,
+        "up": 8.0,
+        "strength": {"extraLight2": 1.0, "extraLight1": 0.8, "flashing": 0.35}
+    },
+    "fire": {"color": [1.0, 0.46, 0.12]},
+    "fireball": {
+        "sprite": "BAL1",
+        "height": 8.0,
+        "frames": {
+            "A": {"radius": 300.0, "strength": 1.0},
+            "B": {"radius": 300.0, "strength": 1.2},
+            "C": {"radius": 380.0, "strength": 1.7},
+            "D": {"radius": 360.0, "strength": 1.2},
+            "E": {"radius": 320.0, "strength": 0.6}
+        }
+    },
+    "barrel": {
+        "sprite": "BEXP",
+        "height": 24.0,
+        "frames": {
+            "A": {"radius": 520.0, "strength": 1.8},
+            "B": {"radius": 580.0, "strength": 2.2},
+            "C": {"radius": 560.0, "strength": 1.8},
+            "D": {"radius": 500.0, "strength": 1.2},
+            "E": {"radius": 440.0, "strength": 0.6}
+        }
+    }
+}

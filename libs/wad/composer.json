@@ -1,0 +1,13 @@
+{
+    "name": "local/wad",
+    "version": "1.0.0",
+    "description": "Doom WAD reader that returns plain DTOs",
+    "require": {
+        "php": "^8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Local\\WAD\\": "src"
+        }
+    }
+}

@@ -1,5 +1,7 @@
 includes:
   - libs/glfw/phpstan.neon
+  - libs/gpu/phpstan.neon
+  - libs/wad/phpstan.neon
   - phar://phpstan.phar/conf/bleedingEdge.neon
   - vendor/phpstan/phpstan-deprecation-rules/rules.neon
   - vendor/phpstan/phpstan-strict-rules/rules.neon
@@ -24,6 +26,18 @@ parameters:
     show_rule_names: true
 services:
   -
-    class: Serafim\Doom\Tests\Architecture\ExampleArchitecture
+    class: Serafim\Doom\Tests\Architecture\LibrariesArchitecture
+    tags:
+      - phpat.test
+  -
+    class: Serafim\Doom\Tests\Architecture\LevelArchitecture
+    tags:
+      - phpat.test
+  -
+    class: Serafim\Doom\Tests\Architecture\GameArchitecture
+    tags:
+      - phpat.test
+  -
+    class: Serafim\Doom\Tests\Architecture\RenderArchitecture
     tags:
       - phpat.test

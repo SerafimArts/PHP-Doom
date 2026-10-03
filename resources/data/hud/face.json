@@ -1,0 +1,11 @@
+{
+    "deadPicture": "STFDEAD0",
+    "ouchPrefix": "STFOUCH",
+    "lookPrefix": "STFST",
+    "ouchDamage": 20,
+    "painLevels": 5,
+    "painDivisor": 101,
+    "maxHealth": 100,
+    "lookTics": 17,
+    "look": [1, 1, 1, 0, 1, 1, 1, 2]
+}

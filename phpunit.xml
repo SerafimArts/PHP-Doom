@@ -12,6 +12,9 @@
     <testsuites>
         <testsuite name="unit">
             <directory>tests</directory>
+            <directory>libs/wad/tests</directory>
+            <directory>libs/gpu/tests</directory>
+            <directory>libs/glfw/tests</directory>
         </testsuite>
     </testsuites>
 
@@ -26,6 +29,7 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>
+        <ini name="zend.enable_gc" value="0"/>
         <env name="NO_COLOR" value="1" force="true"/>
     </php>
 </phpunit>

@@ -1,0 +1,14 @@
+{
+    "sectorDamage": [
+        {"special": 4, "damage": 20},
+        {"special": 5, "damage": 10},
+        {"special": 7, "damage": 5},
+        {"special": 16, "damage": 20}
+    ],
+    "door": {"speed": 2.0, "wait": 150, "clearance": 4.0},
+    "platform": {"speed": 4.0, "wait": 105},
+    "floor": {"speed": 4.0},
+    "lightFlash": {"brightMask": 64, "darkMask": 7},
+    "strobe": {"brightTics": 5, "slowDarkTics": 35},
+    "glow": {"speed": 8}
+}

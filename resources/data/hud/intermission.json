@@ -1,0 +1,22 @@
+{
+    "screenWidth": 320,
+    "titleY": 2,
+    "statsX": 50,
+    "statsY": 50,
+    "timeX": 16,
+    "timeY": 168,
+    "timeDigits": 2,
+    "longestTime": 3599,
+    "background": "WIMAP0",
+    "title": "WILV00",
+    "finished": "WIF",
+    "kills": "WIOSTK",
+    "items": "WIOSTI",
+    "secrets": "WISCRT2",
+    "time": "WITIME",
+    "par": "WIPAR",
+    "percent": "WIPCNT",
+    "colon": "WICOLON",
+    "sucks": "WISUCKS",
+    "digitPrefix": "WINUM"
+}
