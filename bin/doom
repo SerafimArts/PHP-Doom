@@ -1,0 +1,27 @@
+#!/usr/bin/php
+<?php
+
+declare(strict_types=1);
+
+use Serafim\Doom\Command\BuildCommand;
+use Serafim\Doom\Command\BuildShadersCommand;
+use Serafim\Doom\Command\DownloadCommand;
+use Serafim\Doom\Command\DumpAssetsCommand;
+use Serafim\Doom\Command\DumpLevelCommand;
+use Serafim\Doom\Command\FlyCommand;
+use Serafim\Doom\Command\PlayCommand;
+use Serafim\Doom\Command\RenderLevelCommand;
+use Symfony\Component\Console\Application;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$application = new Application('Doom');
+$application->addCommand(new DownloadCommand());
+$application->addCommand(new BuildCommand());
+$application->addCommand(new BuildShadersCommand());
+$application->addCommand(new DumpAssetsCommand());
+$application->addCommand(new DumpLevelCommand());
+$application->addCommand(new FlyCommand());
+$application->addCommand(new PlayCommand());
+$application->addCommand(new RenderLevelCommand());
+$application->run();
