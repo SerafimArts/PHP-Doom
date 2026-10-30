@@ -16,6 +16,11 @@ final class WindowException extends GpuException
         return new self('Unable to initialize GLFW', 0, $prev);
     }
 
+    public static function becauseSurfaceNotCreated(int $result, string $details, ?\Throwable $prev = null): self
+    {
+        return new self(\sprintf('Unable to create a surface (VkResult %d): %s', $result, $details), 0, $prev);
+    }
+
     public static function becausePlatformNotSupported(string $family, ?\Throwable $prev = null): self
     {
         return new self(\sprintf('The platform "%s" is not supported', $family), 0, $prev);

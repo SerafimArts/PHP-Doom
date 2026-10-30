@@ -4,6 +4,7 @@
  * Functions of GLFW that `FFI` objects loaded by `Local\GLFW\GLFW3` call. Keep in sync with `resources/glfw3.h` (types are mapped by hand: pointers are `CData`, `const char*` is a string).
  *
  * @method int glfwInit()
+ * @method void glfwInitVulkanLoader(FFI\CData|\Closure|string|null $loader)
  * @method void glfwTerminate()
  * @method void glfwInitHint(int $hint, int $value)
  * @method void glfwInitAllocator(FFI\CData|\Closure|string|null $allocator)
@@ -123,6 +124,6 @@
  * @method FFI\CData|\Closure|string|null glfwGetProcAddress(string|null $procname)
  * @method int glfwVulkanSupported()
  * @method FFI\CData|\Closure|string|null glfwGetRequiredInstanceExtensions(FFI\CData|\Closure|string|null $count)
- * @method FFI\CData|\Closure|string|null glfwGetWin32Window(FFI\CData|\Closure|string|null $window)
+ * @method int glfwCreateWindowSurface(FFI\CData|\Closure|string|null $instance, FFI\CData|\Closure|string|null $window, FFI\CData|\Closure|string|null $allocator, FFI\CData|\Closure|string|null $surface)
  */
 class FFI {}

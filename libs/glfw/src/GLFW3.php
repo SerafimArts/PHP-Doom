@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Local\GLFW;
 
+use FFI\Location\Locator;
 use Local\GLFW\Exception\GlfwNotSupportedException;
 
 final readonly class GLFW3
@@ -13,10 +14,16 @@ final readonly class GLFW3
      */
     public static function load(): \FFI
     {
-        return \FFI::cdef(
+        $glfw = \FFI::cdef(
             self::getHeaderContent(),
             self::getBinPathname(),
         );
+
+        if (\PHP_OS_FAMILY === 'Darwin') {
+            VulkanLoader::attach($glfw);
+        }
+
+        return $glfw;
     }
 
     /**
@@ -43,12 +50,14 @@ final readonly class GLFW3
 
     /**
      * @return non-empty-string
-     * @throws GlfwNotSupportedException in case of the OS has no bundled library
+     * @throws GlfwNotSupportedException in case of the OS has no usable library
      */
     private static function getBinPathname(): string
     {
-        return match (\strtolower(\PHP_OS_FAMILY)) {
-            'windows' => __DIR__ . '/../bin/glfw3.dll',
+        return match (\PHP_OS_FAMILY) {
+            'Windows' => __DIR__ . '/../bin/glfw3.dll',
+            'Darwin' => Locator::resolve('libglfw.3.dylib', 'libglfw.dylib')
+                ?? throw GlfwNotSupportedException::becauseLibraryIsNotInstalled('glfw'),
             default => throw GlfwNotSupportedException::becauseOsFamilyIsNotSupported(\PHP_OS_FAMILY),
         };
     }

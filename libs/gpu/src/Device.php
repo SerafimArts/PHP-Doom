@@ -8,7 +8,7 @@ use FFI\CData;
 use Local\GPU\Device\DebugMessenger;
 use Local\GPU\Device\PhysicalDeviceSelector;
 use Local\GPU\Device\Requirements;
-use Local\GPU\Device\Win32Surface;
+use Local\GPU\Device\WindowSurface;
 use Local\GPU\Exception\DeviceException;
 use Local\GPU\Memory\MemoryAllocator;
 use Local\GPU\Memory\MemoryKind;
@@ -83,9 +83,10 @@ final class Device
     public static function create(?Window $window = null, DeviceOptions $options = new DeviceOptions()): self
     {
         $vk = Vulkan::load();
-        $requirements = Requirements::createFromOptions($window, $options);
+        $requirements = Requirements::createFromOptions($vk, $window, $options);
 
         $instance = $vk->vkCreateInstance(new VkInstanceCreateInfo(
+            flags: $requirements->instanceFlags,
             applicationInfo: new VkApplicationInfo(
                 applicationName: $options->applicationName,
                 apiVersion: vk_make_api_version(0, 1, 3, 0),
@@ -103,7 +104,7 @@ final class Device
         $surface = null;
 
         if ($window !== null) {
-            $surface = Win32Surface::create($vk, $instance, $window);
+            $surface = WindowSurface::create($vk, $instance, $window);
         }
 
         $selected = new PhysicalDeviceSelector($vk)->select($instance, $surface, $options->isRayQueryEnabled)
@@ -114,7 +115,7 @@ final class Device
             queueCreateInfos: [
                 new VkDeviceQueueCreateInfo(queueFamilyIndex: $selected->queueFamily, queuePriorities: [1.0]),
             ],
-            enabledExtensionNames: $requirements->deviceExtensions,
+            enabledExtensionNames: $requirements->getDeviceExtensions($vk, $selected->physical),
         ));
 
         $memoryProperties = $vk->vkGetPhysicalDeviceMemoryProperties2($selected->physical)->memoryProperties;

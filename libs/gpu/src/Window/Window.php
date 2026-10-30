@@ -248,12 +248,31 @@ final class Window
         return $extensions;
     }
 
-    public function getWin32Handle(): CData
+    /**
+     * @param CData $instance the `VkInstance` handle
+     *
+     * @return int the `VkSurfaceKHR` handle
+     * @throws WindowException in case of GLFW fails to create the surface
+     */
+    public function createSurface(CData $instance): int
     {
-        /** @var CData $hwnd */
-        $hwnd = $this->glfw->glfwGetWin32Window($this->getHandle());
+        $surface = $this->glfw->new('uint64_t');
 
-        return $hwnd;
+        $result = $this->glfw->glfwCreateWindowSurface(
+            $this->glfw->cast('void*', $instance),
+            $this->getHandle(),
+            null,
+            \FFI::addr($surface),
+        );
+
+        if ($result !== 0) {
+            throw WindowException::becauseSurfaceNotCreated($result, \implode('; ', $this->state->errors));
+        }
+
+        $handle = $surface->cdata;
+        \assert(\is_int($handle));
+
+        return $handle;
     }
 
     /**

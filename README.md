@@ -34,6 +34,13 @@ Just... This was bound to happen eventually +)
 - ext-ffi
 - Vulkan-compatible GPU
 
+On macOS GLFW and the Vulkan loader are taken from Homebrew (MoltenVK has no ray queries, so the ray traced lighting
+is not available there):
+
+```bash
+brew install glfw molten-vk vulkan-loader
+```
+
 ## Usage
 
 Just run `php bin/doom --help`
