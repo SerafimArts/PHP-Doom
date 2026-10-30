@@ -14,7 +14,3 @@ test2.php
 
 # Toolset
 *.phar
-
-# Scratch space and downloaded data (doom1.wad, dumps)
-/var/*
-!/var/.gitignore
