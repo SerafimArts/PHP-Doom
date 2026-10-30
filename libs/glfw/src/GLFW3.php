@@ -30,9 +30,13 @@ final readonly class GLFW3
             throw GlfwNotSupportedException::becauseHeaderIsNotReadable($pathname);
         }
 
-        // The native functions of Win32 are absent in the builds for the other platforms
+        // The native functions of a platform are absent in the builds for the other platforms
         if (\PHP_OS_FAMILY !== 'Windows') {
             $content = \str_replace('void* glfwGetWin32Window(void* window);', '', $content);
+        }
+
+        if (\PHP_OS_FAMILY !== 'Darwin') {
+            $content = \str_replace('void* glfwGetCocoaView(void* window);', '', $content);
         }
 
         return $content;

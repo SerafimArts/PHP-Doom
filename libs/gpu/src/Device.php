@@ -6,7 +6,8 @@ namespace Local\GPU;
 
 use FFI\CData;
 use Local\GPU\Device\DebugMessenger;
-use Local\GPU\Device\GlfwSurface;
+use Local\GPU\Device\MetalPlatformDriver;
+use Local\GPU\Device\MetalSurface;
 use Local\GPU\Device\PhysicalDeviceSelector;
 use Local\GPU\Device\Requirements;
 use Local\GPU\Device\Win32Surface;
@@ -32,6 +33,8 @@ use Serafim\Vulkan\Handle\VkPhysicalDevice;
 use Serafim\Vulkan\Handle\VkQueue;
 use Serafim\Vulkan\Handle\VkSampler;
 use Serafim\Vulkan\Handle\VkSurfaceKHR;
+use Serafim\Vulkan\Loader\Platform\PlatformDetector;
+use Serafim\Vulkan\Loader\VulkanLoader;
 use Serafim\Vulkan\Struct\VkApplicationInfo;
 use Serafim\Vulkan\Struct\VkBufferCreateInfo;
 use Serafim\Vulkan\Struct\VkBufferDeviceAddressInfo;
@@ -83,7 +86,9 @@ final class Device
      */
     public static function create(?Window $window = null, DeviceOptions $options = new DeviceOptions()): self
     {
-        $vk = Vulkan::load();
+        $vk = Vulkan::load(VulkanLoader::createDefault()->withPlatformDetector(
+            PlatformDetector::createDefault()->withDriver(new MetalPlatformDriver()),
+        ));
         $requirements = Requirements::createFromOptions($window, $options);
 
         $instance = $vk->vkCreateInstance(new VkInstanceCreateInfo(
@@ -106,8 +111,8 @@ final class Device
 
         if ($window !== null) {
             $surface = match (\PHP_OS_FAMILY) {
-                'Windows' => Win32Surface::create($vk, $instance, $window),
-                default => GlfwSurface::create($vk, $instance, $window),
+                'Darwin' => MetalSurface::create($vk, $instance, $window),
+                default => Win32Surface::create($vk, $instance, $window),
             };
         }
 
