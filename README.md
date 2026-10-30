@@ -20,7 +20,7 @@
  `''                                                                      ``'
 ```
 
-[![PHP Doom](https://img.youtube.com/vi/4zbtD8bmw7E/0.jpg)](https://www.youtube.com/watch?v=4zbtD8bmw7E)
+[![YouTube Video](https://img.youtube.com/vi/4zbtD8bmw7E/maxresdefault.jpg)](https://www.youtube.com/watch?v=4zbtD8bmw7E)
 
 
 # Why?
