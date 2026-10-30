@@ -6,6 +6,7 @@ namespace Local\GPU\Device;
 
 use Local\GPU\DeviceOptions;
 use Local\GPU\Window\Window;
+use Serafim\Vulkan\Enum\VkInstanceCreateFlagBits;
 use Serafim\Vulkan\Struct\Extension\VkDeviceCreateInfoExtension;
 use Serafim\Vulkan\Struct\VkPhysicalDeviceAccelerationStructureFeaturesKHR;
 use Serafim\Vulkan\Struct\VkPhysicalDeviceRayQueryFeaturesKHR;
@@ -26,6 +27,11 @@ final readonly class Requirements
         'VK_KHR_ray_query',
     ];
 
+    /**
+     * The device extension that a portability implementation (MoltenVK) requires to be enabled
+     */
+    public const string PORTABILITY_SUBSET_EXTENSION = 'VK_KHR_portability_subset';
+
     public function __construct(
         /** @var list<non-empty-string> */
         public array $layers,
@@ -34,6 +40,8 @@ final readonly class Requirements
         /** @var list<non-empty-string> */
         public array $deviceExtensions,
         public bool $isRayQueryRequired,
+        /** @var int<0, 1> flags of `VkInstanceCreateFlagBits` */
+        public int $instanceFlags = 0,
     ) {}
 
     public static function createFromOptions(?Window $window, DeviceOptions $options): self
@@ -47,6 +55,14 @@ final readonly class Requirements
             $deviceExtensions[] = 'VK_KHR_swapchain';
         }
 
+        $instanceFlags = 0;
+
+        // MoltenVK is a portability implementation, the loader hides it unless asked to enumerate it
+        if (\PHP_OS_FAMILY === 'Darwin') {
+            $instanceExtensions[] = 'VK_KHR_portability_enumeration';
+            $instanceFlags |= VkInstanceCreateFlagBits::VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
+        }
+
         if ($options->isValidationEnabled) {
             $layers[] = 'VK_LAYER_KHRONOS_validation';
             $instanceExtensions[] = 'VK_EXT_debug_utils';
@@ -56,7 +72,13 @@ final readonly class Requirements
             $deviceExtensions = [...$deviceExtensions, ...self::RAY_QUERY_EXTENSIONS];
         }
 
-        return new self($layers, $instanceExtensions, $deviceExtensions, $options->isRayQueryEnabled);
+        return new self(
+            $layers,
+            $instanceExtensions,
+            $deviceExtensions,
+            $options->isRayQueryEnabled,
+            $instanceFlags,
+        );
     }
 
     /**

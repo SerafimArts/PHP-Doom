@@ -9,6 +9,7 @@ use Local\GLFW\Constants\Glfw;
 use Local\GLFW\Exception\GlfwException;
 use Local\GLFW\GLFW3;
 use Local\GPU\Exception\WindowException;
+use Serafim\Vulkan\Loader\Library\LibraryLocator;
 
 /**
  * A GLFW window without a graphics context, used as a Vulkan surface and as the source of input.
@@ -53,6 +54,10 @@ final class Window
             $state->errors[] = \sprintf('GLFW error 0x%X: %s', $code, $description);
         };
         $this->glfw->glfwSetErrorCallback($errorCallback);
+
+        if (\PHP_OS_FAMILY === 'Darwin') {
+            $this->initVulkanLoader();
+        }
 
         if ($this->glfw->glfwInit() !== Glfw::TRUE) {
             throw WindowException::becauseGlfwNotInitialized();
@@ -257,6 +262,23 @@ final class Window
     }
 
     /**
+     * Creates the Vulkan surface of the window by GLFW, used where no native surface is created by the library
+     * itself (macOS).
+     *
+     * @param CData $instance the `VkInstance` handle
+     * @param CData $surface the `VkSurfaceKHR` the created handle is written to
+     */
+    public function createVulkanSurface(CData $instance, CData $surface): bool
+    {
+        return $this->glfw->glfwCreateWindowSurface(
+            $this->glfw->cast('void*', $instance),
+            $this->getHandle(),
+            null,
+            $this->glfw->cast('uint64_t*', \FFI::addr($surface)),
+        ) === 0;
+    }
+
+    /**
      * Destroys the window and terminates GLFW, the window is not usable afterwards.
      */
     public function close(): void
@@ -268,6 +290,30 @@ final class Window
         $this->glfw->glfwDestroyWindow($this->handle);
         $this->glfw->glfwTerminate();
         $this->handle = null;
+    }
+
+    /**
+     * GLFW looks for the Vulkan loader in the default paths of `dlopen`, which do not include the one of Homebrew,
+     * so it is given the entry point of the loader that the Vulkan library has found.
+     */
+    private function initVulkanLoader(): void
+    {
+        $dl = \FFI::cdef('void* dlopen(const char* path, int mode); void* dlsym(void* handle, const char* name);');
+
+        // @phpstan-ignore-next-line the function is declared by the cdef of the line above
+        $library = $dl->dlopen(LibraryLocator::createDefault()->getLibrary(), 2);
+
+        if ($library === null) {
+            return;
+        }
+
+        /** @var CData|null $loader */
+        // @phpstan-ignore-next-line the function is declared by the cdef of the line above
+        $loader = $dl->dlsym($library, 'vkGetInstanceProcAddr');
+
+        if ($loader !== null) {
+            $this->glfw->glfwInitVulkanLoader($this->glfw->cast('void*', $loader));
+        }
     }
 
     private function getHandle(): CData

@@ -6,6 +6,7 @@ namespace Local\GPU;
 
 use FFI\CData;
 use Local\GPU\Device\DebugMessenger;
+use Local\GPU\Device\GlfwSurface;
 use Local\GPU\Device\PhysicalDeviceSelector;
 use Local\GPU\Device\Requirements;
 use Local\GPU\Device\Win32Surface;
@@ -86,6 +87,7 @@ final class Device
         $requirements = Requirements::createFromOptions($window, $options);
 
         $instance = $vk->vkCreateInstance(new VkInstanceCreateInfo(
+            flags: $requirements->instanceFlags,
             applicationInfo: new VkApplicationInfo(
                 applicationName: $options->applicationName,
                 apiVersion: vk_make_api_version(0, 1, 3, 0),
@@ -103,7 +105,10 @@ final class Device
         $surface = null;
 
         if ($window !== null) {
-            $surface = Win32Surface::create($vk, $instance, $window);
+            $surface = match (\PHP_OS_FAMILY) {
+                'Windows' => Win32Surface::create($vk, $instance, $window),
+                default => GlfwSurface::create($vk, $instance, $window),
+            };
         }
 
         $selected = new PhysicalDeviceSelector($vk)->select($instance, $surface, $options->isRayQueryEnabled)
@@ -114,7 +119,10 @@ final class Device
             queueCreateInfos: [
                 new VkDeviceQueueCreateInfo(queueFamilyIndex: $selected->queueFamily, queuePriorities: [1.0]),
             ],
-            enabledExtensionNames: $requirements->deviceExtensions,
+            enabledExtensionNames: [
+                ...$requirements->deviceExtensions,
+                ...self::getPortabilityExtensions($vk, $selected->physical),
+            ],
         ));
 
         $memoryProperties = $vk->vkGetPhysicalDeviceMemoryProperties2($selected->physical)->memoryProperties;
@@ -134,6 +142,22 @@ final class Device
             messenger: $messenger,
             window: $window,
         );
+    }
+
+    /**
+     * `VK_KHR_portability_subset` has to be enabled when the device (MoltenVK) exposes it.
+     *
+     * @return list<non-empty-string>
+     */
+    private static function getPortabilityExtensions(Vulkan $vk, VkPhysicalDevice $physical): array
+    {
+        foreach ($vk->vkEnumerateDeviceExtensionProperties($physical) as $extension) {
+            if ($extension->extensionName === Requirements::PORTABILITY_SUBSET_EXTENSION) {
+                return [Requirements::PORTABILITY_SUBSET_EXTENSION];
+            }
+        }
+
+        return [];
     }
 
     public function getDeviceName(): string

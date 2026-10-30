@@ -30,6 +30,11 @@ final readonly class GLFW3
             throw GlfwNotSupportedException::becauseHeaderIsNotReadable($pathname);
         }
 
+        // The native functions of Win32 are absent in the builds for the other platforms
+        if (\PHP_OS_FAMILY !== 'Windows') {
+            $content = \str_replace('void* glfwGetWin32Window(void* window);', '', $content);
+        }
+
         return $content;
     }
 
@@ -49,7 +54,25 @@ final readonly class GLFW3
     {
         return match (\strtolower(\PHP_OS_FAMILY)) {
             'windows' => __DIR__ . '/../bin/glfw3.dll',
+            'darwin' => self::findDarwinLibrary(),
             default => throw GlfwNotSupportedException::becauseOsFamilyIsNotSupported(\PHP_OS_FAMILY),
         };
+    }
+
+    /**
+     * GLFW is not bundled for macOS, the library of Homebrew (`brew install glfw`) is used instead.
+     *
+     * @return non-empty-string
+     * @throws GlfwNotSupportedException in case of GLFW is not installed
+     */
+    private static function findDarwinLibrary(): string
+    {
+        foreach (['/opt/homebrew/lib/libglfw.3.dylib', '/usr/local/lib/libglfw.3.dylib'] as $pathname) {
+            if (\is_file($pathname)) {
+                return $pathname;
+            }
+        }
+
+        throw GlfwNotSupportedException::becauseOsFamilyIsNotSupported(\PHP_OS_FAMILY);
     }
 }

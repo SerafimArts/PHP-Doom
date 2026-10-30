@@ -61,6 +61,7 @@ typedef struct GLFWallocator
     void* user;
 } GLFWallocator;
 int glfwInit(void);
+void glfwInitVulkanLoader(void* loader);
 void glfwTerminate(void);
 void glfwInitHint(int hint, int value);
 void glfwInitAllocator(const GLFWallocator* allocator);
@@ -181,3 +182,4 @@ GLFWglproc glfwGetProcAddress(const char* procname);
 int glfwVulkanSupported(void);
 const char** glfwGetRequiredInstanceExtensions(uint32_t* count);
 void* glfwGetWin32Window(void* window);
+int glfwCreateWindowSurface(void* instance, GLFWwindow* window, const void* allocator, uint64_t* surface);
