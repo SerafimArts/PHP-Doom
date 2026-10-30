@@ -6,7 +6,6 @@ namespace Local\GPU;
 
 use FFI\CData;
 use Local\GPU\Device\DebugMessenger;
-use Local\GPU\Device\MetalPlatformDriver;
 use Local\GPU\Device\MetalSurface;
 use Local\GPU\Device\PhysicalDeviceSelector;
 use Local\GPU\Device\Requirements;
@@ -33,8 +32,6 @@ use Serafim\Vulkan\Handle\VkPhysicalDevice;
 use Serafim\Vulkan\Handle\VkQueue;
 use Serafim\Vulkan\Handle\VkSampler;
 use Serafim\Vulkan\Handle\VkSurfaceKHR;
-use Serafim\Vulkan\Loader\Platform\PlatformDetector;
-use Serafim\Vulkan\Loader\VulkanLoader;
 use Serafim\Vulkan\Struct\VkApplicationInfo;
 use Serafim\Vulkan\Struct\VkBufferCreateInfo;
 use Serafim\Vulkan\Struct\VkBufferDeviceAddressInfo;
@@ -86,9 +83,7 @@ final class Device
      */
     public static function create(?Window $window = null, DeviceOptions $options = new DeviceOptions()): self
     {
-        $vk = Vulkan::load(VulkanLoader::createDefault()->withPlatformDetector(
-            PlatformDetector::createDefault()->withDriver(new MetalPlatformDriver()),
-        ));
+        $vk = Vulkan::load();
         $requirements = Requirements::createFromOptions($window, $options);
 
         $instance = $vk->vkCreateInstance(new VkInstanceCreateInfo(
