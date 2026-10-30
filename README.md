@@ -34,11 +34,10 @@ Just... This was bound to happen eventually +)
 - ext-ffi
 - Vulkan-compatible GPU
 
-On macOS GLFW and the Vulkan loader are taken from Homebrew (MoltenVK has no ray queries, so the ray traced lighting
-is not available there):
+On macOS GLFW and the Vulkan loader are taken from Homebrew:
 
 ```bash
-brew install glfw molten-vk vulkan-loader
+brew install glfw vulkan-loader
 ```
 
 ## Usage
