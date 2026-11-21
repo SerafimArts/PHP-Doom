@@ -25,6 +25,11 @@ final readonly class Buffer
          * Pointer to the first byte of the mapped memory, {@see null} for a device local buffer
          */
         private ?CData $mapped = null,
+        /**
+         * Owns the pointer storage returned by vkMapMemory; $mapped is only a cast view of it.
+         */
+        // @phpstan-ignore-next-line the owner only has to stay referenced
+        private ?CData $mapping = null,
     ) {}
 
     public function isMapped(): bool

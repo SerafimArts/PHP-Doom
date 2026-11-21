@@ -166,13 +166,16 @@ final class Device
         $this->vk->vkBindBufferMemory($this->device, $buffer, $memory, 0);
 
         $mapped = null;
+        $mapping = null;
 
         if ($kind !== MemoryKind::DEVICE_LOCAL) {
+            // Keep the owning CData alive: casting a temporary pointer leaves a dangling view.
+            $mapping = $this->vk->vkMapMemory($this->device, $memory, 0, $size);
             /** @var CData $mapped */
-            $mapped = $this->vk->ffi->cast('char*', $this->vk->vkMapMemory($this->device, $memory, 0, $size));
+            $mapped = $this->vk->ffi->cast('char*', $mapping);
         }
 
-        return new Buffer($buffer, $memory, $size, $kind, $mapped);
+        return new Buffer($buffer, $memory, $size, $kind, $mapped, $mapping);
     }
 
     /**

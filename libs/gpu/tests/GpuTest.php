@@ -36,6 +36,30 @@ final class GpuTest extends TestCase
         $this->assertNoValidationMessages();
     }
 
+    public function testMappedPointersRemainValidAcrossBufferAllocations(): void
+    {
+        $device = $this->createDevice();
+        $buffers = [];
+        $data = \str_repeat('mapped-buffer', 4096);
+        $size = \strlen($data) + 16;
+
+        for ($i = 0; $i < 4; ++$i) {
+            $buffer = $device->createBuffer(
+                $size,
+                VkBufferUsageFlagBits::VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                MemoryKind::HOST_VISIBLE,
+            );
+            $buffer->write($data, 8);
+            $buffers[] = $buffer;
+        }
+
+        foreach ($buffers as $buffer) {
+            self::assertSame($data, $buffer->read(\strlen($data), 8));
+        }
+
+        $this->assertNoValidationMessages();
+    }
+
     public function testWritingBeyondTheBufferThrowsResourceException(): void
     {
         $device = $this->createDevice();
