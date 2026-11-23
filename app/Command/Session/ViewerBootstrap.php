@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Serafim\Doom\Command\Session;
 
+use Local\GPU\Device;
 use Local\GPU\DeviceOptions;
 use Local\GPU\Resource\Transfer;
 use Local\GPU\Window\Window;
@@ -58,6 +59,57 @@ final readonly class ViewerBootstrap
         $render = RenderData::load();
         $sprites = SpriteSet::create($wad, $render->sprites->frames);
         $graphics = GraphicsSet::create($wad, $render->graphics);
+
+        return $this->createViewer(
+            $wad,
+            $level,
+            $device,
+            $window,
+            $data,
+            $render,
+            $sprites,
+            $graphics,
+            $canvasWidth,
+            $canvasHeight,
+        );
+    }
+
+    /**
+     * @param int<1, 4294967295> $canvasWidth
+     * @param int<1, 4294967295> $canvasHeight
+     */
+    public function changeMap(Viewer $viewer, string $map, int $canvasWidth, int $canvasHeight): Viewer
+    {
+        return $this->createViewer(
+            $viewer->wad,
+            Level::createFromMap($viewer->wad->readMap($map)),
+            $viewer->device,
+            $viewer->window,
+            $viewer->data,
+            $viewer->render,
+            $viewer->sprites,
+            $viewer->graphics,
+            $canvasWidth,
+            $canvasHeight,
+        );
+    }
+
+    /**
+     * @param int<1, 4294967295> $canvasWidth
+     * @param int<1, 4294967295> $canvasHeight
+     */
+    private function createViewer(
+        Wad $wad,
+        Level $level,
+        Device $device,
+        ?Window $window,
+        GameData $data,
+        RenderData $render,
+        SpriteSet $sprites,
+        GraphicsSet $graphics,
+        int $canvasWidth,
+        int $canvasHeight,
+    ): Viewer {
         $atlas = new LevelAtlasFactory($data->animations)->create($wad, $level, $sprites, $graphics);
 
         $renderer = new LevelRenderer(

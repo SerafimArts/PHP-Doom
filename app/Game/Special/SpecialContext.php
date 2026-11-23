@@ -61,6 +61,22 @@ final readonly class SpecialContext
         return (float) $lowest;
     }
 
+    public function getNextHigherFloor(int $sector): float
+    {
+        $floor = $this->sectors->floorHeights[$sector];
+        $next = \INF;
+
+        foreach ($this->level->neighbors[$sector] as $neighbor) {
+            $height = $this->sectors->floorHeights[$neighbor];
+
+            if ($height > $floor) {
+                $next = \min($next, $height);
+            }
+        }
+
+        return \is_finite($next) ? $next : $floor;
+    }
+
     /**
      * The lowest light around the sector, or the given light when nothing around is darker.
      */

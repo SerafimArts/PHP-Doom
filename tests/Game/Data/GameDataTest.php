@@ -141,6 +141,7 @@ final class GameDataTest extends TestCase
                 'ammo' => self::assertNotNull($pickup->ammo, $name),
                 'armor' => self::assertNotNull($pickup->armor, $name),
                 'weapon' => self::assertNotNull($pickup->weapon, $name),
+                'key' => self::assertNotNull($pickup->key, $name),
                 default => self::assertGreaterThan(0, $pickup->limit, $name),
             };
         }

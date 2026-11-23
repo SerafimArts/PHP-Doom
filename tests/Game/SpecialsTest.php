@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Serafim\Doom\Tests\Game;
 
+use Local\WAD\Map\Linedef;
 use Local\WAD\Wad;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
+use Serafim\Doom\Game\KeyColor;
 use Serafim\Doom\Game\Player;
 use Serafim\Doom\Game\PlayerInput;
 use Serafim\Doom\Game\Special\DoorThinker;
@@ -37,6 +39,111 @@ final class SpecialsTest extends TestCase
     private const int TRAP_SECTOR = 59;
 
     private const int EXIT_LINE = 330;
+
+    public function testSecretSwitchRequestsTheSecretExit(): void
+    {
+        $level = $this->readEpisodeMap('E1M3');
+        $world = $this->createWorld($level, $this->getTextureNames());
+        $world->things->replace([]);
+
+        foreach ($level->map->linedefs as $line) {
+            if ($line->special !== 51) {
+                continue;
+            }
+
+            $this->placePlayerFacingLine($world, $line, 24);
+            $world->tick(new PlayerInput(isUsing: true));
+            self::assertTrue($world->isExitRequested());
+            self::assertTrue($world->isSecretExitRequested());
+
+            return;
+        }
+
+        self::fail('Expected a secret exit switch in E1M3');
+    }
+
+    public function testBlueKeyCanBePickedUpFromTheLowerWalkwayInE1M7(): void
+    {
+        $level = $this->readEpisodeMap('E1M7');
+        $world = $this->createWorld($level);
+        $world->things->replace(\array_values(\array_filter(
+            $world->things->all(),
+            static fn($thing): bool => $thing->type === 5,
+        )));
+
+        $player = $world->player;
+        $player->x = -960;
+        $player->y = 272;
+        $player->z = $world->state->sectors->floorHeights[$level->findSector(-960, 272)];
+        $player->yaw = \M_PI;
+        $startingHeight = $player->z;
+
+        for ($tic = 0; $tic < 30 && !$world->stats->inventory->hasKey(KeyColor::BLUE); ++$tic) {
+            $world->tick(new PlayerInput(forwardMove: PlayerInput::WALK_FORWARD));
+        }
+
+        self::assertTrue($world->stats->inventory->hasKey(KeyColor::BLUE));
+        self::assertSame($startingHeight, $player->z);
+    }
+
+    public function testBossGateAndEpisodeExit(): void
+    {
+        $level = $this->readEpisodeMap('E1M8');
+        $world = $this->createWorld($level);
+        $bosses = \array_values(\array_filter($world->things->all(), static fn($thing): bool => $thing->type === 3003));
+        self::assertCount(2, $bosses);
+        $gate = $level->sectorsByTag[666][0];
+        $height = $world->state->sectors->floorHeights[$gate];
+
+        $world->things->replace([]);
+        $bosses[0]->health = 0;
+        $world->tick(new PlayerInput());
+        self::assertSame($height, $world->state->sectors->floorHeights[$gate]);
+        $bosses[1]->health = 0;
+        $world->tick(new PlayerInput());
+        self::assertLessThan($height, $world->state->sectors->floorHeights[$gate]);
+        self::assertFalse($world->isExitRequested());
+
+        foreach ($level->map->linedefs as $line) {
+            if ($line->special === 7) {
+                $this->placePlayerFacingLine($world, $line, 20);
+                $world->tick(new PlayerInput(isUsing: true));
+
+                break;
+            }
+        }
+
+        for ($tic = 0; $tic < 30; ++$tic) {
+            $world->tick(new PlayerInput());
+        }
+
+        self::assertSame(-32.0, (float) $world->state->sectors->floorHeights[60]);
+
+        foreach ($level->map->linedefs as $line) {
+            if ($line->special !== 97) {
+                continue;
+            }
+
+            $this->placePlayerFacingLine($world, $line, 1);
+            $world->stats->health = 50;
+            $world->tick(new PlayerInput(forwardMove: PlayerInput::RUN_FORWARD));
+            $sector = $level->findSectorAt($world->player->x, $world->player->y);
+            self::assertSame(11, $level->map->sectors[$sector]->special);
+            self::assertFalse($world->isExitRequested());
+
+            for ($tic = 0; $tic < 64; ++$tic) {
+                $world->tick(new PlayerInput());
+            }
+
+            self::assertSame(10, $world->stats->health);
+            self::assertTrue($world->isExitRequested());
+            self::assertFalse($world->isSecretExitRequested());
+
+            return;
+        }
+
+        self::fail('Expected a teleporter for the E1M8 finale');
+    }
 
 
 
@@ -307,5 +414,26 @@ final class SpecialsTest extends TestCase
         $world->player->z = $world->state->sectors->floorHeights[$this->getLevel()->findSector((int) $x, (int) $y)];
 
         return $world;
+    }
+
+    private function readEpisodeMap(string $map): Level
+    {
+        $this->getLevel();
+
+        return Level::createFromMap(Wad::open(\dirname(__DIR__, 2) . '/var/wad/doom1.wad')->readMap($map));
+    }
+
+    private function placePlayerFacingLine(World $world, Linedef $line, float $distance): void
+    {
+        $from = $world->level->map->vertexes[$line->startVertex];
+        $to = $world->level->map->vertexes[$line->endVertex];
+        $length = \hypot($to->x - $from->x, $to->y - $from->y);
+        $normalX = ($to->y - $from->y) / $length;
+        $normalY = -($to->x - $from->x) / $length;
+        $player = $world->player;
+        $player->x = ($from->x + $to->x) / 2 + $normalX * $distance;
+        $player->y = ($from->y + $to->y) / 2 + $normalY * $distance;
+        $player->yaw = \atan2(-$normalY, -$normalX);
+        $player->z = $world->state->sectors->floorHeights[$world->level->findSectorAt($player->x, $player->y)];
     }
 }

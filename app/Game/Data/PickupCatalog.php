@@ -7,6 +7,7 @@ namespace Serafim\Doom\Game\Data;
 use Serafim\Doom\Exception\DataFileException;
 use Serafim\Doom\Game\AmmoType;
 use Serafim\Doom\Game\ArmorType;
+use Serafim\Doom\Game\KeyColor;
 use Serafim\Doom\Game\Weapon;
 use Serafim\Doom\Level\Data\DataReader;
 
@@ -48,6 +49,7 @@ final readonly class PickupCatalog
                 $row->findInt('needBelow', 0),
                 $row->findString('needMessage'),
                 $row->findString('newMessage'),
+                $row->findEnum('key', KeyColor::class),
             );
         }
 

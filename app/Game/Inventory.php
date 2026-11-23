@@ -9,6 +9,19 @@ namespace Serafim\Doom\Game;
  */
 final class Inventory
 {
+    /** @var array<value-of<KeyColor>, true> */
+    private array $keys = [];
+
+    public function hasKey(KeyColor $key): bool
+    {
+        return isset($this->keys[$key->value]);
+    }
+
+    public function giveKey(KeyColor $key): void
+    {
+        $this->keys[$key->value] = true;
+    }
+
     /**
      * Ammunition by the kind
      *

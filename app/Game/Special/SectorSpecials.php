@@ -25,9 +25,16 @@ final class SectorSpecials
      */
     public int $totalSecrets = 0;
 
+    private bool $isExitRequested = false;
+
     public function __construct(
         private readonly SpecialContext $context,
     ) {}
+
+    public function isExitRequested(): bool
+    {
+        return $this->isExitRequested;
+    }
 
     /**
      * Starts the lights of the level and counts its secrets.
@@ -78,10 +85,14 @@ final class SectorSpecials
             return;
         }
 
-        $damage = $this->context->specials->getSectorDamage($special);
+        $damage = $special === SectorSpecial::EXIT_DAMAGE ? 20 : $this->context->specials->getSectorDamage($special);
 
         if ($damage > 0 && ($tic & self::DAMAGE_MASK) === 0) {
             $stats->damage($damage);
+        }
+
+        if ($special === SectorSpecial::EXIT_DAMAGE && $stats->health <= 10) {
+            $this->isExitRequested = true;
         }
     }
 }

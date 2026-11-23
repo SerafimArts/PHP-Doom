@@ -6,6 +6,7 @@ namespace Serafim\Doom\Game\Data;
 
 use Serafim\Doom\Game\AmmoType;
 use Serafim\Doom\Game\ArmorType;
+use Serafim\Doom\Game\KeyColor;
 use Serafim\Doom\Game\Weapon;
 
 /**
@@ -43,5 +44,6 @@ final readonly class PickupDefinition
          * @var non-empty-string|null
          */
         public ?string $newMessage = null,
+        public ?KeyColor $key = null,
     ) {}
 }

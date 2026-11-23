@@ -68,5 +68,20 @@
         "halvedWhenDropped": true,
         "message": "Picked up 8 shotgun shells.",
         "newMessage": "You got the shotgun!"
+    },
+    "BLUE_KEY": {
+        "kind": "key",
+        "key": "BLUE",
+        "message": "Picked up the blue key."
+    },
+    "YELLOW_KEY": {
+        "kind": "key",
+        "key": "YELLOW",
+        "message": "Picked up the yellow key."
+    },
+    "RED_KEY": {
+        "kind": "key",
+        "key": "RED",
+        "message": "Picked up the red key."
     }
 }

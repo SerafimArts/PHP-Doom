@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Serafim\Doom\Level;
 
 /**
- * The special of a sector that the first level has: `sector_t.special` of linuxdoom, named after the Unofficial Doom
- * Specs.
+ * Supported WAD sector specials.
  */
 enum SectorSpecial: int
 {
@@ -16,6 +15,7 @@ enum SectorSpecial: int
     case DAMAGE_5 = 7;
     case LIGHT_GLOW = 8;
     case SECRET = 9;
+    case EXIT_DAMAGE = 11;
     case STROBE_SLOW_SYNC = 12;
     case DAMAGE_20 = 16;
 }

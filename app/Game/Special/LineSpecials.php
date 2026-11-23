@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Serafim\Doom\Game\Special;
 
+use Serafim\Doom\Game\KeyColor;
+use Serafim\Doom\Game\Physics\Collider;
 use Serafim\Doom\Game\Player;
+use Serafim\Doom\Game\PlayerStats;
 use Serafim\Doom\Level\Geometry\WallPartType;
 use Serafim\Doom\Level\LinedefFlag;
 use Serafim\Doom\Level\LineGeometry;
@@ -13,7 +16,7 @@ use Serafim\Doom\Level\SidedefState;
 
 /**
  * The special of a line: a door that the player opens by using it, a switch, and lines that act when the player walks
- * over them. Only the specials that the first level has are known.
+ * over them.
  */
 final class LineSpecials
 {
@@ -31,6 +34,10 @@ final class LineSpecials
 
     private bool $isExitRequested = false;
 
+    private bool $isSecretExitRequested = false;
+
+    private ?int $teleportTag = null;
+
     private readonly LineGeometry $geometry;
 
     /**
@@ -40,6 +47,7 @@ final class LineSpecials
         private readonly SpecialContext $context,
         private readonly SidedefState $sides,
         private readonly array $textures,
+        private readonly Collider $collider,
     ) {
         $this->geometry = new LineGeometry($context->level->map);
         $specials = [];
@@ -56,11 +64,57 @@ final class LineSpecials
         return $this->isExitRequested;
     }
 
+    public function isSecretExitRequested(): bool
+    {
+        return $this->isSecretExitRequested;
+    }
+
+    public function teleportPlayer(Player $player): bool
+    {
+        $tag = $this->teleportTag;
+        $this->teleportTag = null;
+
+        if ($tag === null) {
+            return false;
+        }
+
+        $level = $this->context->level;
+
+        foreach ($level->map->things as $thing) {
+            if ($thing->type !== 14) {
+                continue;
+            }
+
+            $sector = $level->findSector($thing->x, $thing->y);
+
+            if ($level->map->sectors[$sector]->tag !== $tag) {
+                continue;
+            }
+
+            $position = $this->collider->check($thing->x, $thing->y, $this->context->sectors->floorHeights[$sector]);
+
+            if (!$position->isFree || $position->ceilingZ - $position->floorZ < Player::HEIGHT) {
+                continue;
+            }
+
+            $player->x = $thing->x;
+            $player->y = $thing->y;
+            $player->z = $player->floorZ = $position->floorZ;
+            $player->ceilingZ = $position->ceilingZ;
+            $player->yaw = \deg2rad($thing->angle);
+            $player->momentumX = $player->momentumY = $player->momentumZ = $player->bob = 0.0;
+
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * The player uses what is in front of the eyes: the first line with a special on the way, or a wall that stops the
      * way.
      */
-    public function use(Player $player): void
+    public function use(Player $player, PlayerStats $stats): void
     {
         $endX = $player->x + \cos($player->yaw) * self::USE_RANGE;
         $endY = $player->y + \sin($player->yaw) * self::USE_RANGE;
@@ -90,7 +144,7 @@ final class LineSpecials
                     $side = 1;
                 }
 
-                $this->useLine($line, $side);
+                $this->useLine($line, $side, $stats);
 
                 return;
             }
@@ -138,8 +192,7 @@ final class LineSpecials
     }
 
     /**
-     * The player moved from one place to another: the lines with a special that were crossed from their front side to
-     * their back side act.
+     * Activates the line specials crossed by the player.
      */
     public function cross(float $fromX, float $fromY, float $toX, float $toY): void
     {
@@ -149,11 +202,15 @@ final class LineSpecials
             \min($fromY, $toY),
             \max($fromY, $toY),
         ) as $line) {
-            if (LineSpecial::tryFrom($this->specials[$line])?->isWalkTrigger() !== true) {
+            $special = LineSpecial::tryFrom($this->specials[$line]);
+            if ($special?->isWalkTrigger() !== true) {
                 continue;
             }
 
-            if ($this->geometry->isOnLeft($line, $fromX, $fromY) || !$this->geometry->isOnLeft($line, $toX, $toY)) {
+            $fromLeft = $this->geometry->isOnLeft($line, $fromX, $fromY);
+            if ($fromLeft === $this->geometry->isOnLeft($line, $toX, $toY)
+                || ($fromLeft && ($special === LineSpecial::TELEPORT
+                    || $special === LineSpecial::FLOOR_LOWER_TURBO || $special === LineSpecial::LIFT_LOWER_WAIT_RAISE))) {
                 continue;
             }
 
@@ -165,7 +222,7 @@ final class LineSpecials
         }
     }
 
-    private function useLine(int $line, int $side): void
+    private function useLine(int $line, int $side, PlayerStats $stats): void
     {
         if ($side !== 0) {
             return;
@@ -174,17 +231,53 @@ final class LineSpecials
         $linedef = $this->context->level->map->linedefs[$line];
 
         $special = LineSpecial::tryFrom($this->specials[$line]);
+        $key = match ($special) {
+            LineSpecial::BLUE_DOOR, LineSpecial::OPEN_BLUE_DOOR => KeyColor::BLUE,
+            LineSpecial::RED_DOOR, LineSpecial::OPEN_RED_DOOR => KeyColor::RED,
+            LineSpecial::YELLOW_DOOR, LineSpecial::OPEN_YELLOW_DOOR => KeyColor::YELLOW,
+            default => null,
+        };
 
-        if ($special === LineSpecial::DOOR_OPEN_WAIT_CLOSE && $linedef->leftSidedef !== null) {
+        if ($key !== null && !$stats->inventory->hasKey($key)) {
+            $stats->feedback->say(\sprintf('You need the %s key.', $key->value));
+
+            return;
+        }
+
+        if (($special === LineSpecial::DOOR_OPEN_WAIT_CLOSE || $special === LineSpecial::BLUE_DOOR
+            || $special === LineSpecial::RED_DOOR || $special === LineSpecial::YELLOW_DOOR)
+            && $linedef->leftSidedef !== null) {
             $this->useDoor($this->context->level->map->sidedefs[$linedef->leftSidedef]->sector);
 
             return;
         }
 
-        if ($special === LineSpecial::EXIT_LEVEL) {
+        if (($special === LineSpecial::OPEN_DOOR || $special === LineSpecial::OPEN_BLUE_DOOR
+            || $special === LineSpecial::OPEN_RED_DOOR || $special === LineSpecial::OPEN_YELLOW_DOOR)
+            && $linedef->leftSidedef !== null) {
+            $sector = $this->context->level->map->sidedefs[$linedef->leftSidedef]->sector;
+
+            if ($this->openDoor($sector)) {
+                $this->specials[$line] = 0;
+            }
+
+            return;
+        }
+
+        if ($special?->isSectorSwitch() === true) {
+            if ($this->activateTaggedSectors($linedef->tag, $special) && !$special->isRepeatableSwitch()) {
+                $this->pressSwitch($linedef->rightSidedef);
+                $this->specials[$line] = 0;
+            }
+
+            return;
+        }
+
+        if ($special === LineSpecial::EXIT_LEVEL || $special === LineSpecial::SECRET_EXIT) {
             $this->pressSwitch($linedef->rightSidedef);
             $this->specials[$line] = 0;
             $this->isExitRequested = true;
+            $this->isSecretExitRequested = $special === LineSpecial::SECRET_EXIT;
         }
     }
 
@@ -210,23 +303,97 @@ final class LineSpecials
         $linedef = $this->context->level->map->linedefs[$line];
         $special = LineSpecial::tryFrom($this->specials[$line]);
 
-        foreach ($this->context->level->sectorsByTag[$linedef->tag] ?? [] as $sector) {
+        if ($special === LineSpecial::TELEPORT) {
+            $this->teleportTag ??= $linedef->tag;
+
+            return;
+        }
+
+        if ($special !== null && $this->activateTaggedSectors($linedef->tag, $special)
+            && $special->isSingleUseWalkTrigger()) {
+            $this->specials[$line] = 0;
+        }
+    }
+
+    private function openDoor(int $sector): bool
+    {
+        if ($this->context->thinkers->findHolder($sector) !== null) {
+            return false;
+        }
+
+        $this->context->thinkers->add(new DoorThinker($this->context, $sector, true), $sector);
+
+        return true;
+    }
+
+    private function activateTaggedSectors(int $tag, LineSpecial $special): bool
+    {
+        $activated = false;
+
+        foreach ($this->context->level->sectorsByTag[$tag] ?? [] as $sector) {
             if ($this->context->thinkers->findHolder($sector) !== null) {
                 continue;
             }
 
-            $thinker = new FloorThinker($this->context, $sector);
+            if ($special === LineSpecial::BUILD_STAIRS || $special === LineSpecial::WALK_BUILD_STAIRS) {
+                $this->buildStairs($sector);
+                $activated = true;
 
-            if ($special === LineSpecial::LIFT_LOWER_WAIT_RAISE) {
-                $thinker = new PlatformThinker($this->context, $sector);
+                continue;
             }
 
+            $thinker = match ($special) {
+                LineSpecial::LIFT_LOWER_WAIT_RAISE, LineSpecial::SWITCH_LIFT => new PlatformThinker($this->context, $sector),
+                LineSpecial::WALK_OPEN_DOOR, LineSpecial::WALK_OPEN_DOOR_REPEAT,
+                LineSpecial::SWITCH_OPEN_DOOR => new DoorThinker($this->context, $sector, true),
+                LineSpecial::WALK_OPEN_WAIT_CLOSE, LineSpecial::SWITCH_OPEN_WAIT_CLOSE => new DoorThinker($this->context, $sector),
+                LineSpecial::SWITCH_LOWER_FLOOR, LineSpecial::WALK_LOWER_FLOOR => new FloorThinker(
+                    $this->context,
+                    $sector,
+                    $this->context->getLowestFloorAround($sector),
+                ),
+                LineSpecial::WALK_RAISE_FLOOR, LineSpecial::WALK_RAISE_TO_CEILING => new FloorThinker(
+                    $this->context,
+                    $sector,
+                    \min($this->context->getLowestCeilingAround($sector), $this->context->sectors->ceilingHeights[$sector]),
+                ),
+                LineSpecial::SWITCH_RAISE_FLOOR, LineSpecial::SWITCH_RAISE_PLATFORM,
+                LineSpecial::WALK_RAISE_PLATFORM => new FloorThinker(
+                    $this->context,
+                    $sector,
+                    $this->context->getNextHigherFloor($sector),
+                ),
+                default => new FloorThinker($this->context, $sector),
+            };
             $this->context->thinkers->add($thinker, $sector);
+            $activated = true;
         }
 
-        if ($special === LineSpecial::FLOOR_LOWER_TURBO) {
-            $this->specials[$line] = 0;
-        }
+        return $activated;
+    }
+
+    private function buildStairs(int $sector): void
+    {
+        $sectors = $this->context->sectors;
+        $flat = $sectors->floorFlats[$sector];
+        $height = $sectors->floorHeights[$sector];
+
+        do {
+            $height += 8;
+            $this->context->thinkers->add(new FloorThinker($this->context, $sector, $height), $sector);
+            $next = null;
+
+            foreach ($this->context->level->neighbors[$sector] as $neighbor) {
+                if ($sectors->floorFlats[$neighbor] === $flat && $this->context->thinkers->findHolder($neighbor) === null
+                    && $sectors->floorHeights[$neighbor] < $height && $sectors->ceilingHeights[$neighbor] >= $height) {
+                    $next = $neighbor;
+
+                    break;
+                }
+            }
+
+            $sector = $next;
+        } while ($sector !== null);
     }
 
     private function pressSwitch(int $sidedef): void
