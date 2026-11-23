@@ -69,7 +69,19 @@ final readonly class PickupSystem
             PickupKind::ARMOR_BONUS => $this->takeArmorBonus($pickup, $stats),
             PickupKind::ARMOR => $this->takeArmor($pickup, $stats),
             PickupKind::WEAPON => $this->takeWeapon($pickup, $stats, $isDropped),
+            PickupKind::KEY => $this->takeKey($pickup, $stats),
         };
+    }
+
+    private function takeKey(PickupDefinition $pickup, PlayerStats $stats): ?string
+    {
+        if ($pickup->key === null || $stats->inventory->hasKey($pickup->key)) {
+            return null;
+        }
+
+        $stats->inventory->giveKey($pickup->key);
+
+        return $pickup->message;
     }
 
     private function isTouching(Player $player, Mobj $thing): bool

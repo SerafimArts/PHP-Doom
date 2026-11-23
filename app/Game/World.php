@@ -140,7 +140,12 @@ final class World
 
     public function isExitRequested(): bool
     {
-        return $this->systems->lines->isExitRequested();
+        return $this->systems->lines->isExitRequested() || $this->systems->sectorSpecials->isExitRequested();
+    }
+
+    public function isSecretExitRequested(): bool
+    {
+        return $this->systems->lines->isSecretExitRequested();
     }
 
     /**
@@ -185,7 +190,7 @@ final class World
         }
 
         if ($input->isUsing) {
-            $this->systems->lines->use($this->player);
+            $this->systems->lines->use($this->player, $this->stats);
         }
 
         $fromX = $this->player->x;
@@ -193,6 +198,10 @@ final class World
 
         $this->systems->physics->tic($this->player, $input);
         $this->systems->lines->cross($fromX, $fromY, $this->player->x, $this->player->y);
+        if ($this->systems->lines->teleportPlayer($this->player)) {
+            $this->previous = $this->player->getView($this->tic);
+        }
+
         $this->systems->sectorSpecials->applyToPlayer($this->player, $this->stats, $this->tic);
     }
 

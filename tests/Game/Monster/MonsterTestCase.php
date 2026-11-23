@@ -106,6 +106,6 @@ abstract class MonsterTestCase extends TestCase
             $this->getGameData()->animations,
         );
 
-        return new \Serafim\Doom\Game\Special\LineSpecials($context, $world->state->sides, []);
+        return new \Serafim\Doom\Game\Special\LineSpecials($context, $world->state->sides, [], $collider);
     }
 }

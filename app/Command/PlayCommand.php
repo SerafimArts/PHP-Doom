@@ -19,8 +19,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * Walks through a level: the game runs 35 tics per second, the picture is drawn as often as the screen allows with the
  * view interpolated between the tics. W S A D move, the mouse and the arrows turn, SPACE or E uses doors and switches,
- * LEFT SHIFT runs, TAB releases the mouse, ESC leaves. The exit switch ends the level, the player who dies starts
- * again.
+ * LEFT SHIFT runs, TAB releases the mouse, ESC leaves. The exit switch advances to the next map in the WAD,
+ * and the player who dies starts the current map again.
  */
 #[AsCommand(name: 'play', description: 'Walk through a level in a window')]
 final class PlayCommand extends Command
@@ -70,23 +70,52 @@ final class PlayCommand extends Command
             height: $options->getDimension('height'),
         ));
 
-        $viewer = new ViewerBootstrap(\dirname(__DIR__, 2) . '/resources/shaders')->create(
+        $bootstrap = new ViewerBootstrap(\dirname(__DIR__, 2) . '/resources/shaders');
+        $canvasWidth = $options->getDimension('canvas-width');
+        $canvasHeight = $options->getDimension('canvas-height');
+        $viewer = $bootstrap->create(
             $options,
             $window,
             'Doom',
-            $options->getDimension('canvas-width'),
-            $options->getDimension('canvas-height'),
+            $canvasWidth,
+            $canvasHeight,
         );
 
-        new PlaySession(
-            $viewer,
-            $window,
-            \array_map(strval(...), \array_keys($viewer->wad->readTextureDefinitions())),
-            !$options->getBool('no-vsync'),
-            $options->findFloat('seconds') ?? 0.0,
-            $io,
-            $options->getBool('debug-collision'),
-        )->run();
+        $maps = $viewer->wad->listMaps();
+        $textures = \array_map(strval(...), \array_keys($viewer->wad->readTextureDefinitions()));
+        $isVsyncEnabled = !$options->getBool('no-vsync');
+        $timeLimit = $options->findFloat('seconds') ?? 0.0;
+        $isCollisionDebugged = $options->getBool('debug-collision');
+
+        while (true) {
+            $map = $viewer->level->map->name;
+            $index = \array_search($map, $maps, true);
+            $normalDestination = match ($map) {
+                'E1M8' => null,
+                'E1M9' => \in_array('E1M4', $maps, true) ? 'E1M4' : null,
+                default => $index === false ? null : ($maps[$index + 1] ?? null),
+            };
+            $secretDestination = $map === 'E1M3' && \in_array('E1M9', $maps, true) ? 'E1M9' : null;
+
+            $nextMap = new PlaySession(
+                $viewer,
+                $window,
+                $textures,
+                $isVsyncEnabled,
+                $timeLimit,
+                $io,
+                $isCollisionDebugged,
+                $normalDestination,
+                $secretDestination,
+            )->run();
+
+            if ($nextMap === null) {
+                break;
+            }
+
+            $io->writeln(\sprintf('Loading %s', $nextMap));
+            $viewer = $bootstrap->changeMap($viewer, $nextMap, $canvasWidth, $canvasHeight);
+        }
 
         return self::SUCCESS;
     }

@@ -59,6 +59,25 @@
         "reactionTime": 8,
         "randomStart": true
     },
+    "BARON": {
+        "doomednum": 3003,
+        "radius": 24,
+        "height": 64,
+        "solid": true,
+        "spawn": "S_BOSS_STND",
+        "see": "S_BOSS_RUN1",
+        "melee": "S_BOSS_ATK1",
+        "missile": "S_BOSS_ATK1",
+        "pain": "S_BOSS_PAIN",
+        "death": "S_BOSS_DIE1",
+        "health": 1000,
+        "painChance": 50,
+        "shootable": true,
+        "countsAsKill": true,
+        "speed": 8,
+        "reactionTime": 8,
+        "randomStart": true
+    },
     "BLOODY_MESS": {
         "doomednum": 10,
         "radius": 20,
@@ -214,5 +233,26 @@
         "height": 16,
         "pickup": "BLUE_ARMOR",
         "spawn": "S_ARM2_1"
+    },
+    "BLUE_KEY": {
+        "doomednum": 5,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_BLUE_KEY",
+        "pickup": "BLUE_KEY"
+    },
+    "YELLOW_KEY": {
+        "doomednum": 6,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_YELLOW_KEY",
+        "pickup": "YELLOW_KEY"
+    },
+    "RED_KEY": {
+        "doomednum": 13,
+        "radius": 20,
+        "height": 16,
+        "spawn": "S_RED_KEY",
+        "pickup": "RED_KEY"
     }
 }

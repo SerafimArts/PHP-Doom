@@ -18,6 +18,7 @@ final class DoorThinker implements Thinker
     public function __construct(
         private readonly SpecialContext $context,
         private readonly int $sector,
+        private readonly bool $staysOpen = false,
     ) {
         $this->topHeight = $context->getLowestCeilingAround($sector) - $context->specials->doorClearance;
     }
@@ -88,6 +89,12 @@ final class DoorThinker implements Thinker
         );
 
         if ($result === PlaneResult::REACHED_DESTINATION) {
+            if ($this->staysOpen) {
+                $this->context->thinkers->release($this->sector);
+
+                return false;
+            }
+
             $this->phase = DoorPhase::WAITING;
             $this->countdown = $this->context->specials->doorWait;
         }

@@ -19,6 +19,7 @@ use Serafim\Doom\Game\Monster\Sight;
 use Serafim\Doom\Game\Physics\Collider;
 use Serafim\Doom\Game\Physics\LineTable;
 use Serafim\Doom\Game\Physics\PlayerPhysics;
+use Serafim\Doom\Game\Special\FloorThinker;
 use Serafim\Doom\Game\Special\LineSpecials;
 use Serafim\Doom\Game\Special\PlaneMover;
 use Serafim\Doom\Game\Special\SectorSpecials;
@@ -37,6 +38,10 @@ use Serafim\Doom\Level\LevelState;
 final readonly class WorldFactory
 {
     private const int PLAYER_START = 1;
+
+    private const int BARON = 3003;
+
+    private const int BOSS_GATE_TAG = 666;
 
     public function __construct(
         private GameData $data,
@@ -104,9 +109,11 @@ final readonly class WorldFactory
             $special,
             $state->sides,
             \array_fill_keys(\array_map(\strtoupper(...), $textureNames), true),
+            $collider,
         );
         $sectorSpecials = new SectorSpecials($special);
         $sectorSpecials->spawn();
+        $this->spawnBossGate($special, $things);
 
         $missiles = new MissileSystem($context, $collider, $damage, $tuning->monster);
 
@@ -145,6 +152,38 @@ final readonly class WorldFactory
             $data->animations,
             $parSeconds,
         );
+    }
+
+    private function spawnBossGate(SpecialContext $context, ThingRegistry $things): void
+    {
+        if ($context->level->map->name !== 'E1M8') {
+            return;
+        }
+
+        $bosses = \array_filter($things->all(), static fn(Mobj $thing): bool => $thing->type === self::BARON);
+
+        if ($bosses === []) {
+            return;
+        }
+
+        $wereBossesDefeated = static function () use ($bosses): bool {
+            foreach ($bosses as $boss) {
+                if ($boss->health > 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        foreach ($context->level->sectorsByTag[self::BOSS_GATE_TAG] ?? [] as $sector) {
+            $context->thinkers->add(new FloorThinker(
+                $context,
+                $sector,
+                $context->getLowestFloorAround($sector),
+                $wereBossesDefeated,
+            ), $sector);
+        }
     }
 
     private function spawnPlayer(Level $level, LevelState $state): Player

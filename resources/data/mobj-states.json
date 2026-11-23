@@ -1046,5 +1046,197 @@
         "next": null,
         "action": "NONE",
         "fullBright": false
+    },
+    "S_BOSS_STND": {
+        "sprite": "BOSS",
+        "frame": "A",
+        "tics": 10,
+        "next": "S_BOSS_STND2",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_BOSS_STND2": {
+        "sprite": "BOSS",
+        "frame": "B",
+        "tics": 10,
+        "next": "S_BOSS_STND",
+        "action": "LOOK",
+        "fullBright": false
+    },
+    "S_BOSS_RUN1": {
+        "sprite": "BOSS",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_BOSS_RUN2",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN2": {
+        "sprite": "BOSS",
+        "frame": "A",
+        "tics": 3,
+        "next": "S_BOSS_RUN3",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN3": {
+        "sprite": "BOSS",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_BOSS_RUN4",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN4": {
+        "sprite": "BOSS",
+        "frame": "B",
+        "tics": 3,
+        "next": "S_BOSS_RUN5",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN5": {
+        "sprite": "BOSS",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_BOSS_RUN6",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN6": {
+        "sprite": "BOSS",
+        "frame": "C",
+        "tics": 3,
+        "next": "S_BOSS_RUN7",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN7": {
+        "sprite": "BOSS",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_BOSS_RUN8",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_RUN8": {
+        "sprite": "BOSS",
+        "frame": "D",
+        "tics": 3,
+        "next": "S_BOSS_RUN1",
+        "action": "CHASE",
+        "fullBright": false
+    },
+    "S_BOSS_ATK1": {
+        "sprite": "BOSS",
+        "frame": "E",
+        "tics": 8,
+        "next": "S_BOSS_ATK2",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_BOSS_ATK2": {
+        "sprite": "BOSS",
+        "frame": "F",
+        "tics": 8,
+        "next": "S_BOSS_ATK3",
+        "action": "FACE_TARGET",
+        "fullBright": false
+    },
+    "S_BOSS_ATK3": {
+        "sprite": "BOSS",
+        "frame": "G",
+        "tics": 6,
+        "next": "S_BOSS_RUN1",
+        "action": "TROOP_ATTACK",
+        "fullBright": false
+    },
+    "S_BOSS_PAIN": {
+        "sprite": "BOSS",
+        "frame": "H",
+        "tics": 2,
+        "next": "S_BOSS_PAIN2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_PAIN2": {
+        "sprite": "BOSS",
+        "frame": "H",
+        "tics": 2,
+        "next": "S_BOSS_RUN1",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_DIE1": {
+        "sprite": "BOSS",
+        "frame": "I",
+        "tics": 8,
+        "next": "S_BOSS_DIE2",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_DIE2": {
+        "sprite": "BOSS",
+        "frame": "J",
+        "tics": 8,
+        "next": "S_BOSS_DIE3",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_DIE3": {
+        "sprite": "BOSS",
+        "frame": "K",
+        "tics": 6,
+        "next": "S_BOSS_DIE4",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_DIE4": {
+        "sprite": "BOSS",
+        "frame": "L",
+        "tics": 6,
+        "next": "S_BOSS_DIE5",
+        "action": "FALL",
+        "fullBright": false
+    },
+    "S_BOSS_DIE5": {
+        "sprite": "BOSS",
+        "frame": "M",
+        "tics": 8,
+        "next": "S_BOSS_DIE6",
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BOSS_DIE6": {
+        "sprite": "BOSS",
+        "frame": "N",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_BLUE_KEY": {
+        "sprite": "BKEY",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_YELLOW_KEY": {
+        "sprite": "YKEY",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
+    },
+    "S_RED_KEY": {
+        "sprite": "RKEY",
+        "frame": "A",
+        "tics": -1,
+        "next": null,
+        "action": "NONE",
+        "fullBright": false
     }
 }

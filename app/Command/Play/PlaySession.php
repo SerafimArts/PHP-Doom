@@ -34,9 +34,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 final class PlaySession
 {
     /**
-     * Seconds the intermission screen stays before a key closes it
+     * Seconds before a key can dismiss the intermission
      */
     private const float RESULT_DELAY = 1.0;
+
+    private const float AUTO_ADVANCE_DELAY = 3.0;
 
     private readonly InputConfig $input;
 
@@ -50,6 +52,8 @@ final class PlaySession
 
     private ?LevelResult $result = null;
 
+    private ?string $nextMap = null;
+
     private float $resultShownAt = 0.0;
 
     private ?StallDetector $stalls = null;
@@ -58,7 +62,7 @@ final class PlaySession
 
     /**
      * @param list<string> $textures the names of the wall textures that exist
-     * @param float $timeLimit seconds after which the game ends, 0 for never
+     * @param float $timeLimit GLFW time at which the game ends, 0 for never
      */
     public function __construct(
         private readonly Viewer $viewer,
@@ -68,6 +72,8 @@ final class PlaySession
         private readonly float $timeLimit,
         private readonly SymfonyStyle $io,
         bool $isCollisionDebugged = false,
+        private readonly ?string $normalDestination = null,
+        private readonly ?string $secretDestination = null,
     ) {
         $this->collisionLog = new CollisionLog(\dirname(__DIR__, 3) . '/var/log/collision.log');
 
@@ -82,7 +88,10 @@ final class PlaySession
         $this->world = $this->worlds->create($viewer->level, $textures);
     }
 
-    public function run(): void
+    /**
+     * Returns the destination after a completed level, or null when the game ends.
+     */
+    public function run(): ?string
     {
         $renderer = $this->viewer->renderer;
         $device = $this->viewer->device;
@@ -109,12 +118,20 @@ final class PlaySession
         $title = new FpsTitle($window);
         $clock = new TicClock();
         $total = 0;
+        $advance = false;
 
         while (!$window->shouldClose() && ($this->timeLimit === 0.0 || $window->getTime() < $this->timeLimit)) {
             $window->pollEvents();
-            $this->handleKeys($keyboard, $mouse);
+            $advance = $this->handleKeys($keyboard, $mouse);
 
             $now = $window->getTime();
+            $advance = $advance || ($this->nextMap !== null
+                && $now - $this->resultShownAt >= self::AUTO_ADVANCE_DELAY);
+
+            if ($advance || $window->shouldClose()) {
+                break;
+            }
+
             $keyboard->addMouseMotion($mouse->readMotion());
 
             $this->tick($keyboard, $clock->advance($now), $now);
@@ -157,20 +174,35 @@ final class PlaySession
                 \memory_get_peak_usage() / 1e6,
             ),
         );
+
+        if ($advance && !$window->shouldClose() && ($this->timeLimit === 0.0 || $window->getTime() < $this->timeLimit)) {
+            return $this->nextMap;
+        }
+
+        return null;
     }
 
-    private function handleKeys(KeyboardInput $keyboard, MouseCapture $mouse): void
+    private function handleKeys(KeyboardInput $keyboard, MouseCapture $mouse): bool
     {
+        $advance = false;
+
         foreach ($this->window->takeKeyEvents() as $event) {
             if (!$event->isPress()) {
                 continue;
             }
 
-            if ($this->result !== null && $this->window->getTime() - $this->resultShownAt >= self::RESULT_DELAY) {
-                $this->window->requestClose();
-            }
-
             $action = $this->input->bindings->findAction($event->key);
+
+            if ($this->result !== null && $action !== KeyAction::LEAVE
+                && $this->window->getTime() - $this->resultShownAt >= self::RESULT_DELAY) {
+                if ($this->nextMap !== null) {
+                    $advance = true;
+                } else {
+                    $this->window->requestClose();
+                }
+
+                continue;
+            }
 
             if ($action === null) {
                 continue;
@@ -186,6 +218,8 @@ final class PlaySession
                 KeyAction::TOGGLE_MOUSE => $mouse->toggle(),
             };
         }
+
+        return $advance;
     }
 
     /**
@@ -193,7 +227,7 @@ final class PlaySession
      */
     private function tick(KeyboardInput $keyboard, int $tics, float $now): void
     {
-        for (; $tics > 0 && $this->result === null; --$tics) {
+        for (; $tics > 0 && $this->result === null && !$this->world->isExitRequested(); --$tics) {
             $input = $keyboard->read();
 
             $this->world->tick($input);
@@ -203,6 +237,9 @@ final class PlaySession
         if ($this->result === null && $this->world->isExitRequested()) {
             $this->result = $this->world->getResult();
             $this->resultShownAt = $now;
+            $this->nextMap = $this->world->isSecretExitRequested()
+                ? $this->secretDestination ?? $this->normalDestination
+                : $this->normalDestination;
             $this->io->success($this->describeResult());
         }
 
@@ -264,7 +301,8 @@ final class PlaySession
         $seconds = \intdiv($this->world->getTic(), TicClock::RATE);
 
         return \sprintf(
-            'Level complete: time %d:%02d, secrets %d of %d, health %d',
+            '%s complete: time %d:%02d, secrets %d of %d, health %d',
+            $this->viewer->level->map->name === 'E1M8' ? 'Episode' : 'Level',
             \intdiv($seconds, 60),
             $seconds % 60,
             $this->world->stats->secrets,

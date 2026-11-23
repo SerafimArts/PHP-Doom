@@ -15,4 +15,5 @@ enum PickupKind: string
     case ARMOR_BONUS = 'armorBonus';
     case ARMOR = 'armor';
     case WEAPON = 'weapon';
+    case KEY = 'key';
 }
