@@ -58,6 +58,8 @@ final readonly class GLFW3
             'Windows' => __DIR__ . '/../bin/glfw3.dll',
             'Darwin' => Locator::resolve('libglfw.3.dylib', 'libglfw.dylib')
                 ?? throw GlfwNotSupportedException::becauseLibraryIsNotInstalled('glfw'),
+            'Linux' => Locator::resolve('libglfw.so.3', 'libglfw.so')
+                ?? throw GlfwNotSupportedException::becauseLibraryIsNotInstalled('glfw'),
             default => throw GlfwNotSupportedException::becauseOsFamilyIsNotSupported(\PHP_OS_FAMILY),
         };
     }
